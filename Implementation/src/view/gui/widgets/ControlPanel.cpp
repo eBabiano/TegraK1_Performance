@@ -93,6 +93,12 @@ namespace src
                     mAvSelected = model::av::AVTypes::BACKGROUND_SUBTRACTOR;
                     notify(events::SelectAVEvent(mAvSelected, mIsGPU));
                 }
+
+                void ControlPanel::on_opticalFlowButton_clicked()
+                {
+                    mAvSelected = model::av::AVTypes::OPTICAL_FLOW;
+                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
+                }
             }
         }
     }

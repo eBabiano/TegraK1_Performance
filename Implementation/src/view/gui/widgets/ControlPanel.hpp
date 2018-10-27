@@ -47,6 +47,8 @@ namespace src
 
                     void on_backgroundSubButton_clicked();
 
+                    void on_opticalFlowButton_clicked();
+
                 private:
                         elements::Button* mStartButton;
                         elements::Button* mStopButton;

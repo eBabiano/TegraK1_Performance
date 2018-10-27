@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(FirstPrototype_Tegra)
+project(TegraK1_Performance)
 
 find_package(Boost REQUIRED COMPONENTS system filesystem thread chrono)
 find_package(Qt5Core REQUIRED)
@@ -14,8 +14,11 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(CMAKE_CXX_FLAGS "-g -Wall -fPIC -std=c++11")
 #SET(CMAKE_AUTOMOC ON)
-#set(FLYCAPTURE2_LIB ${CMAKE_SOURCE_DIR}/lib/flycapture2)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
+
+#add_library(flycapture2 SHARED IMPORTED)
+
+#SET_PROPERTY(TARGET flycapture2 PROPERTY IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/lib/flycpature2/lib/*.so")
 
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 
@@ -36,11 +39,13 @@ file(GLOB_RECURSE controller "src/controller/*.hpp"
 file(GLOB_RECURSE model "src/model/*.hpp"
                         "src/model/*.cpp")
 
+#file(GLOB_RECURSE flycapture2 "lib/flycapture2/include/*.h")
+
 qt5_wrap_ui(FORM_H ${widgets_forms})
 qt5_wrap_cpp(HEADER_H ${widgets_headers})
 
-ADD_LIBRARY(FirstPrototype_Tegra_CONFIG ${FORM_H} ${HEADER_H})
-QT5_USE_MODULES(FirstPrototype_Tegra_CONFIG Widgets)
+ADD_LIBRARY(TegraK1_Performance_CONFIG ${FORM_H} ${HEADER_H})
+QT5_USE_MODULES(TegraK1_Performance_CONFIG Widgets)
 
 set(MAIN_SRC ${sources}
              ${views}
@@ -49,6 +54,7 @@ set(MAIN_SRC ${sources}
              ${util}
              ${controller}
              ${model})
+             #${flycapture2})
 
 #################### PROJECT DEPENDENCIES #######################################
 
@@ -58,18 +64,20 @@ include_directories(${Qt5Core_INCLUDE_DIRS})
 include_directories(${Qt5Gui_INCLUDE_DIRS})
 include_directories(${Qt5OpenGL_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
-include_directories(${FLYCAPTURE2_LIB})
+#include_directories(${FLYCAPTURE2_LIB})
 
-add_executable(FirstPrototype_Tegra ${MAIN_SRC}
+add_executable(TegraK1_Performance ${MAIN_SRC}
                                 ${FORM_H}
                                 ${HEADER_H})
 
-QT5_USE_MODULES(FirstPrototype_Tegra Core Gui Widgets OpenGL)
+QT5_USE_MODULES(TegraK1_Performance Core Gui Widgets OpenGL)
 
-target_link_libraries(FirstPrototype_Tegra   ${Qt5Core}
-                                       ${Qt5Widgets}
-                                       ${Qt5Gui}
-                                       ${Qt5OpenGL}
-                                       ${Boost_LIBRARIES}
-                                       ${OpenCV_LIBS})
+target_link_libraries(TegraK1_Performance  ${Qt5Core}
+                                           ${Qt5Widgets}
+                                           ${Qt5Gui}
+                                           ${Qt5OpenGL}
+                                           ${Boost_LIBRARIES}
+                                           ${OpenCV_LIBS})
+                                        #   ${flycapture2})
+
 
