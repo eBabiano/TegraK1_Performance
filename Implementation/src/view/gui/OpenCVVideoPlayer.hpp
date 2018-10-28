@@ -20,9 +20,9 @@ namespace src
 
                     cv::Mat getCurrentFrame() const;
 
-                    cv::VideoCapture getVideoCapture() const;
+                    cv::VideoCapture getVideoCapture() const;                    
 
-            private:
+                private:
                     std::string mWindowInputName;
                     std::string mWindowOutputName;
                     cv::VideoCapture mCapture;
@@ -30,6 +30,7 @@ namespace src
                     char mWaitKey;
 
                     bool mIsRunningThread;
+
             };
         }
     }

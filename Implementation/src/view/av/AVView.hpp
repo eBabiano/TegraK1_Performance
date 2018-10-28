@@ -27,6 +27,7 @@ namespace src
                    virtual void stop();
                    virtual void runCPUThread() = 0;
                    virtual void runGPUThread() = 0;
+                   virtual void onMouseEvent(int event, int x, int y);
 
                    cv::Mat getImage();
                    void setImage(cv::Mat &image);

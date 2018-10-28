@@ -2,6 +2,8 @@
 #include <iostream>
 #include <lib/flycapture2/include/FlyCapture2.h>
 
+
+
 namespace src
 {
     namespace view
@@ -49,7 +51,7 @@ namespace src
                 frame = mCurrentFrame;
 
                 cv::imshow(mWindowInputName, frame);
-                mWaitKey = (char) cv::waitKey(13);
+                mWaitKey = (char) cv::waitKey(1);
             }
 
             void OpenCVVideoPlayer::runVideoPlayerOutput(cv::Mat newframe, bool sumWithInput)
@@ -73,7 +75,7 @@ namespace src
                 }
 
                 cv::imshow(mWindowOutputName, frame);
-                mWaitKey = (char) cv::waitKey(13);
+                mWaitKey = (char) cv::waitKey(1);
             }
 
             cv::Mat OpenCVVideoPlayer::getCurrentFrame() const

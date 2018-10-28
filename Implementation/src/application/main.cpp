@@ -18,6 +18,18 @@
 
 #include <QApplication>
 
+static cv::Point2f point;
+static bool addRemovePt;
+
+void onMouse(int event, int x, int y, int flags, void* userdata)
+{
+    if (event == cv::EVENT_LBUTTONDOWN)
+    {
+        point = cv::Point2f((float) x, (float) y);
+        addRemovePt = true;
+    }
+}
+
 int main(int argc, char* argv[])
 {
 
@@ -38,7 +50,10 @@ int main(int argc, char* argv[])
     src::view::av::AVRenderManager* mAVRenderManager = new src::view::av::AVRenderManager(*mAVManager, *mUpdateBenchmarkController);
 
     QApplication app(argc, argv);
-    src::view::gui::OpenCVVideoPlayer* videoPlayer = new src::view::gui::OpenCVVideoPlayer(0, "Input Video", "Output Video");
+    std::string windowInput = "Input Video";
+    std::string windowOutput = "Output Video";
+    src::view::gui::OpenCVVideoPlayer* videoPlayer = new src::view::gui::OpenCVVideoPlayer(0, windowInput, windowOutput);
+    cv::setMouseCallback(windowOutput, onMouse, NULL);
     std::cout << "OpenCV version: " << CV_VERSION << std::endl;
 
     src::view::gui::MainWindow* mainWindow = new src::view::gui::MainWindow(*mBenchmark, *mAVManager, *mAVRenderManager, *videoPlayer);

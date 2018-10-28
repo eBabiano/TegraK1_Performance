@@ -37,6 +37,11 @@ namespace src
                mThread->join();
            }
 
+           void AVView::onMouseEvent(int event, int x, int y)
+           {
+
+           }
+
            cv::Mat AVView::getImage()
            {
                return mImage;
@@ -49,15 +54,20 @@ namespace src
 
            cv::Mat AVView::getCapturedImage()
            {
-               if (!mCapturedImage.empty())
-               {
+               //cv::Mat image;// = cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+               //if (!mCapturedImage.empty())
+               //{
                    return mCapturedImage;
-               }
+               //}
+               //return image;
            }
 
            void AVView::setCapturedImage(cv::Mat &capturedImage)
            {
-               mCapturedImage = capturedImage;
+               if (!capturedImage.empty())
+               {
+                   mCapturedImage = capturedImage;
+               }
            }
 
            void AVView::resetImage()
