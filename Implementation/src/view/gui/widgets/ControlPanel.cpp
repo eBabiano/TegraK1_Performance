@@ -99,6 +99,12 @@ namespace src
                     mAvSelected = model::av::AVTypes::OPTICAL_FLOW;
                     notify(events::SelectAVEvent(mAvSelected, mIsGPU));
                 }
+
+                void ControlPanel::on_pedestrianDetectButton_clicked()
+                {
+                    mAvSelected = model::av::AVTypes::PEDESTRIAN_DETECTOR;
+                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
+                }
             }
         }
     }

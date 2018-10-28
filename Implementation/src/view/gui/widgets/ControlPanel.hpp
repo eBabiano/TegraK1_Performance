@@ -49,6 +49,8 @@ namespace src
 
                     void on_opticalFlowButton_clicked();
 
+                    void on_pedestrianDetectButton_clicked();
+
                 private:
                         elements::Button* mStartButton;
                         elements::Button* mStopButton;

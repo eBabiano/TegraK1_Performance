@@ -12,6 +12,7 @@ namespace src
             const std::string AVTypes::FACE_DETECTION("FACE_DETECTION");
             const std::string AVTypes::BACKGROUND_SUBTRACTOR("BACKGROUND SUBTRACTOR");
             const std::string AVTypes::OPTICAL_FLOW("OPTICAL_FLOW");
+            const std::string AVTypes::PEDESTRIAN_DETECTOR("PEDESTRIAN_DETECTOR");
 
             const std::string AVTypes::CPU_DEVICE("CPU_DEVICE");
             const std::string AVTypes::GPU_DEVICE("GPU_DEVICE");

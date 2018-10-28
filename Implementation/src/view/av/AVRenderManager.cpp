@@ -6,6 +6,7 @@
 #include <src/view/av/FaceDetection.hpp>
 #include <src/view/av/BackgroundSubtractor.hpp>
 #include <src/view/av/OpticalFlow.hpp>
+#include <src/view/av/PedestrianDetection.hpp>
 
 #include <src/model/av/AVTypes.hpp>
 
@@ -27,6 +28,7 @@ namespace src
                mAVViews[model::av::AVTypes::FACE_DETECTION] = new view::av::FaceDetection();
                mAVViews[model::av::AVTypes::BACKGROUND_SUBTRACTOR] = new view::av::BackgroundSubtractor();
                mAVViews[model::av::AVTypes::OPTICAL_FLOW] = new view::av::OpticalFlow();
+               mAVViews[model::av::AVTypes::PEDESTRIAN_DETECTOR] = new view::av::PedestrianDetection();
 
                mAVManager->attach(*this);
 
