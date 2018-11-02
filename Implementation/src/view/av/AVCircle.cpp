@@ -27,9 +27,7 @@ namespace src
 
                     image.copyTo(mImage);
 
-                    time = (double(t2-t1)/CLOCKS_PER_SEC);
-                    std::cout << "Execution Time: " << time*1000.0 << " ms" << std::endl;
-                    updateBenchmark(time);
+                    updateBenchmark(t1, t2);
                     sleep(1);
                 }
 

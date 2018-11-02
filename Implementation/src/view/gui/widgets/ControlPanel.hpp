@@ -33,10 +33,6 @@ namespace src
 
                 private slots:
 
-                    void on_selecCircleButton_clicked();
-
-                    void on_selectSquareButton_clicked();
-
                     void on_selectGpuButton_clicked();
 
                     void on_selectFaceDetect_clicked();

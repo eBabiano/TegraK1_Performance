@@ -42,7 +42,7 @@ namespace src
                    void setTotalFrames(int value);
 
                protected:
-                   void updateBenchmark(double millisec);
+                   void updateBenchmark(double initTime, double endTime);
                    boost::thread* mThread;
                    bool mIsRunningThread;
                    cv::Mat mImage;

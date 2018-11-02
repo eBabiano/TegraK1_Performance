@@ -29,12 +29,6 @@ namespace src
                     addView(*mStartButton);
                     addView(*mStopButton);
 
-                    if (mAVManager->getSelectedType() == model::av::AVTypes::AV_CIRCLE)
-                    {
-                        ui->selectCircleButton->setCheckable(true);
-                        ui->selectCircleButton->setChecked(true);
-                    }
-
                     ui->gpuRadioButton->setChecked(false);
                     ui->cpuRadioButton->setChecked(true);
                 }
@@ -42,18 +36,6 @@ namespace src
                 ControlPanel::~ControlPanel()
                 {
                     delete ui;
-                }
-
-                void ControlPanel::on_selecCircleButton_clicked()
-                {
-                    mAvSelected = model::av::AVTypes::AV_CIRCLE;
-                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
-                }
-
-                void ControlPanel::on_selectSquareButton_clicked()
-                {
-                    mAvSelected = model::av::AVTypes::AV_SQUARE;
-                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
                 }
 
                 void ControlPanel::on_selectGpuButton_clicked()

@@ -51,10 +51,8 @@ namespace src
                    }
 
                    capturedFrame.copyTo(mImage);
-                   time = (double(t2-t1)/CLOCKS_PER_SEC);
-                   std::cout << "Execution Time: " << time*1000.0 << " ms" << std::endl;
 
-                   updateBenchmark(time);
+                   updateBenchmark(t1, t2);
                }
            }
 
@@ -117,10 +115,7 @@ namespace src
 
                    capturedFrameCPU.copyTo(mImage);
 
-                   time = (double(t2-t1)/CLOCKS_PER_SEC);
-                   std::cout << "Execution Time: " << time*1000.0 << " ms" << std::endl;
-
-                   updateBenchmark(time);
+                   updateBenchmark(t1, t2);
                }
            }
        }

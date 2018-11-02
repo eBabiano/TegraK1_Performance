@@ -15,35 +15,25 @@ namespace src
                unsigned t1, t2;
                double time;
                cv::Mat frame;
-               cv::Mat frame_gray, frameMOG;
-               //cv::Ptr<cv::BackgroundSubtractorMOG> backgroundSub = new cv::BackgroundSubtractorMOG();
+               cv::Mat frame_gray;
                cv::BackgroundSubtractorMOG2 mog2;
 
                while (mIsRunningThread)
                {
-                   std::cout << "(((((((((((((((((" << std::endl;
                    getCapturedImage().copyTo(frame);
-                   std::cout << "/////////////////" << std::endl;
                    if (!frame.empty())
                    {
                        if (frame.channels() == 3 || frame.channels() == 4)
                        {
                            cv::cvtColor(frame, frame_gray, CV_RGB2GRAY);
-                           std::cout << "****************" << std::endl;
 
                            t1 = clock();
-                           ///@todo OpenCV Error: Sizes of input arguments do not match
-                           mog2(frame_gray, frameMOG, 0.0);
+                           mog2(frame_gray, frame_gray, 0.0);
                            t2 = clock();
-                           std::cout << "------------------" << std::endl;
 
-                           frameMOG.copyTo(mImage);
-                           time = (double(t2-t1)/CLOCKS_PER_SEC);
-                           std::cout << "Execution Time: " << time*1000.0 << " ms" << std::endl;
+                           frame_gray.copyTo(mImage);
 
-                           updateBenchmark(time);
-                           std::cout << "@@@@@@@@@@@@@@@@@@@" << std::endl;
-
+                           updateBenchmark(t1, t2);
                        }
                    }
                }

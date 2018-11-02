@@ -29,7 +29,9 @@ namespace src
 
         void Benchmark::setFramesPerSec(int value)
         {
+            mFramesPerSecondsVector.push_back(value);
             mFramesPerSec = value;
+            notify(events::BenchmarkUpdatedEvent());
         }
 
         int Benchmark::getFrames() const
@@ -55,10 +57,19 @@ namespace src
             return acumValue / size;
         }
 
-        void Benchmark::setWeightedAverageProcessingTimeMillisec(double value)
+        int Benchmark::getWeightedAverageFramesPerSeconds()
         {
-            mWeightedAverageProcessingTimeMillisec = value;
+            int acumValue = 0;
+            int size = mFramesPerSecondsVector.size();
+            for (int i = 0; i < size; i++)
+            {
+                acumValue = mFramesPerSecondsVector.at(i) + acumValue;
+            }
+
+            mFramesPerSecondsVector.clear();
+            return acumValue / size;
         }
+
         bool Benchmark::getIsPlaying() const
         {
             return mIsPlaying;
@@ -77,7 +88,6 @@ namespace src
         {
             mIsGPU = value;
         }
-
 
     }
 }

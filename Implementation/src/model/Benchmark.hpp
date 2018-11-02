@@ -25,7 +25,7 @@ namespace src
                 void setFrames(int value);
 
                 double getWeightedAverageProcessingTimeMillisec();
-                void setWeightedAverageProcessingTimeMillisec(double value);
+                int getWeightedAverageFramesPerSeconds();
 
                 bool getIsPlaying() const;
                 void setIsPlaying(bool value);
@@ -43,6 +43,7 @@ namespace src
                 bool mIsPlaying;
 
                 std::vector<double> mProcessingTimeMillisecVector;
+                std::vector<double> mFramesPerSecondsVector;
 
                 using util::Observable<events::BenchmarkUpdatedEvent>::notify;
 

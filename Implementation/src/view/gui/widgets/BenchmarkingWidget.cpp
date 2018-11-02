@@ -1,5 +1,6 @@
 #include <src/view/gui/widgets/BenchmarkingWidget.hpp>
 #include "ui_BenchmarkingWidget.h"
+#include <src/util/String.hpp>
 
 namespace src
 {
@@ -27,7 +28,10 @@ namespace src
 
                 void BenchmarkingWidget::observableUpdated(const model::events::BenchmarkUpdatedEvent &event)
                 {
-                    ui->tpProccesing->setText(std::to_string(mBenchmark->getProcessingTimeMillisec()).c_str());
+                    std::string proccessigTime = util::String::getFixed(mBenchmark->getProcessingTimeMillisec(), 2);
+                    std::string fps = std::to_string(mBenchmark->getFramesPerSec());
+                    ui->tpProccesing->setText(proccessigTime.c_str());
+                    ui->fps->setText(fps.c_str());
                 }
 
                 void BenchmarkingWidget::on_playButton_clicked()
@@ -38,7 +42,12 @@ namespace src
                 void BenchmarkingWidget::on_stopButton_clicked()
                 {
                     notify(events::StartAVEvent(false));
-                    ui->tpWeightedCPU->setText(std::to_string(mBenchmark->getWeightedAverageProcessingTimeMillisec()).c_str());
+
+                    std::string averageProccessigTime = util::String::getFixed(mBenchmark->getWeightedAverageProcessingTimeMillisec(), 2);
+                    std::string fpsTime = std::to_string(mBenchmark->getWeightedAverageFramesPerSeconds());
+
+                    ui->tpWeighted->setText(averageProccessigTime.c_str());
+                    ui->fpsWeighted->setText(fpsTime.c_str());
                 }
             }
         }

@@ -54,12 +54,7 @@ namespace src
 
            cv::Mat AVView::getCapturedImage()
            {
-               //cv::Mat image;// = cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
-               //if (!mCapturedImage.empty())
-               //{
-                   return mCapturedImage;
-               //}
-               //return image;
+               return mCapturedImage;
            }
 
            void AVView::setCapturedImage(cv::Mat &capturedImage)
@@ -80,9 +75,14 @@ namespace src
                mIsGPU = activate;
            }
 
-           void AVView::updateBenchmark(double millisec)
+           void AVView::updateBenchmark(double initTime, double endTime)
            {
-               notify(events::UpdateBenchmarkEvent(millisec*1000, ""));
+               double time = (double(endTime - initTime) / CLOCKS_PER_SEC);
+
+               double millisec = time * 1000;
+               int fps = 1 / time;
+
+               notify(events::UpdateBenchmarkEvent(millisec, fps, ""));
            }
 
            void AVView::setTotalFrames(int value)

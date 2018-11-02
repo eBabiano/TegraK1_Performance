@@ -1,7 +1,5 @@
 #include <src/view/av/AVRenderManager.hpp>
 
-#include <src/view/av/AVCircle.hpp>
-#include <src/view/av/AVRectangle.hpp>
 #include <src/view/av/TestCudaGpu.hpp>
 #include <src/view/av/FaceDetection.hpp>
 #include <src/view/av/BackgroundSubtractor.hpp>
@@ -20,10 +18,8 @@ namespace src
                                             controller::UpdateBenchmarkController& updateBenchmarkController)
                : mAVManager(&avManager)
                , mImageForRender(cv::Mat::zeros(cv::Size(640, 480), CV_8UC3))
-               , mSelectedAV(model::av::AVTypes::AV_CIRCLE)
+               , mSelectedAV(avManager.getSelectedType())
            {
-               mAVViews[model::av::AVTypes::AV_CIRCLE] = new view::av::AVCircle();
-               mAVViews[model::av::AVTypes::AV_SQUARE] = new view::av::AVRectangle();
                mAVViews[model::av::AVTypes::AV_TEST_GPU_CPU] = new view::av::TestCudaGpu();
                mAVViews[model::av::AVTypes::FACE_DETECTION] = new view::av::FaceDetection();
                mAVViews[model::av::AVTypes::BACKGROUND_SUBTRACTOR] = new view::av::BackgroundSubtractor();
@@ -70,7 +66,17 @@ namespace src
 
            void AVRenderManager::sumAllAVImages()
            {
-                mImageForRender = mImageForRender + mAVViews.at(mSelectedAV)->getImage();
+               if (!mAVViews.at(mSelectedAV)->getImage().empty())
+               {
+                   if (mImageForRender.channels() == mAVViews.at(mSelectedAV)->getImage().channels())
+                   {
+                       mImageForRender = mImageForRender + mAVViews.at(mSelectedAV)->getImage();
+                   }
+                   else
+                   {
+                       mImageForRender = mAVViews.at(mSelectedAV)->getImage();
+                   }
+               }
            }
 
            void AVRenderManager::setCaptureImage(cv::Mat mat)
