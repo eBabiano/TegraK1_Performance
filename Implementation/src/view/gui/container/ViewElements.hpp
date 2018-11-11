@@ -20,6 +20,7 @@ namespace src
 
                         //CONTAINERS
                         static const int CONTROL_PANEL;
+                        static const int AV_WIDGET;
                         static const int BENCHMARKING_WIDGET;
 
                 };

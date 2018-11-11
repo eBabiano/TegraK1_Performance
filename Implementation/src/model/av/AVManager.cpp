@@ -9,7 +9,7 @@ namespace src
         namespace av
         {
             AVManager::AVManager()
-                : mSelectedType(AVTypes::AV_TEST_GPU_CPU)
+                : mSelectedType(AVTypes::BACKGROUND_SUBTRACTOR)
                 , mIsGPU(false)
             {
             }

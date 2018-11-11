@@ -3,7 +3,6 @@
 #include <src/model/av/AVManager.hpp>
 #include <src/model/Benchmark.hpp>
 
-#include <src/view/gui/OpenGLCVPort.hpp>
 #include <src/view/gui/MainWindow.hpp>
 #include <src/view/gui/OpenCVVideoPlayer.hpp>
 #include <src/view/gui/events/StartAVEvent.hpp>
@@ -59,8 +58,8 @@ int main(int argc, char* argv[])
     src::view::gui::MainWindow* mainWindow = new src::view::gui::MainWindow(*mBenchmark, *mAVManager, *mAVRenderManager, *videoPlayer);
 
     //LINKERS
-    mainWindow->getControlPanel()->src::util::Observable<src::view::gui::events::SelectAVEvent>::attach(*mSelectAVController);
-    mainWindow->getBenchmarkingWidget()->src::util::Observable<src::view::gui::events::StartAVEvent>::attach(*mStartAVController);
+    mainWindow->getControlPanel()->src::util::Observable<src::view::gui::events::StartAVEvent>::attach(*mStartAVController);
+    mainWindow->getModifyParametersWidget()->src::util::Observable<src::view::gui::events::SelectAVEvent>::attach(*mSelectAVController);
  //   mainWindow->getControlPanel()->attach(*mStartAVRectangleController);
 
     mainWindow->show();

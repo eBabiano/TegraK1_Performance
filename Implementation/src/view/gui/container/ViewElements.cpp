@@ -15,6 +15,7 @@ namespace src
                 //CONTAINERS
                 const int ViewElements::CONTROL_PANEL = 10;
                 const int ViewElements::BENCHMARKING_WIDGET = 11;
+                const int ViewElements::AV_WIDGET = 12;
 
                 ViewElements::ViewElements()
                 {

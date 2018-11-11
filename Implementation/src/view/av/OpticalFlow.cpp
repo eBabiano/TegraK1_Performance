@@ -131,6 +131,7 @@ namespace src
                            std::vector<float> err;
                            if(prevGray.empty())
                                gray.copyTo(prevGray);
+                           ///cv::gpu::calcOpticalFlowBM()
                            cv::calcOpticalFlowPyrLK(prevGray, gray, points[0], points[1], status, err, winSize,
                                    3, termcrit, 0, 0.001);
                            size_t i, k;

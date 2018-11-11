@@ -1,6 +1,5 @@
 #include <src/view/av/AVRenderManager.hpp>
 
-#include <src/view/av/TestCudaGpu.hpp>
 #include <src/view/av/FaceDetection.hpp>
 #include <src/view/av/BackgroundSubtractor.hpp>
 #include <src/view/av/OpticalFlow.hpp>
@@ -20,7 +19,6 @@ namespace src
                , mImageForRender(cv::Mat::zeros(cv::Size(640, 480), CV_8UC3))
                , mSelectedAV(avManager.getSelectedType())
            {
-               mAVViews[model::av::AVTypes::AV_TEST_GPU_CPU] = new view::av::TestCudaGpu();
                mAVViews[model::av::AVTypes::FACE_DETECTION] = new view::av::FaceDetection();
                mAVViews[model::av::AVTypes::BACKGROUND_SUBTRACTOR] = new view::av::BackgroundSubtractor();
                mAVViews[model::av::AVTypes::OPTICAL_FLOW] = new view::av::OpticalFlow();

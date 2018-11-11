@@ -26,11 +26,14 @@
    <string>Form</string>
   </property>
   <layout class="QGridLayout" name="gridLayout_2">
-   <item row="0" column="0" colspan="2">
-    <layout class="QVBoxLayout" name="controlPanelLayout"/>
-   </item>
    <item row="0" column="2">
-    <layout class="QGridLayout" name="benchmarkLayout"/>
+    <layout class="QGridLayout" name="modifyParametersLayout"/>
+   </item>
+   <item row="1" column="2">
+    <layout class="QHBoxLayout" name="controlPanelLayout"/>
+   </item>
+   <item row="0" column="0" rowspan="2" colspan="2">
+    <layout class="QVBoxLayout" name="benchmarkLayout"/>
    </item>
   </layout>
  </widget>

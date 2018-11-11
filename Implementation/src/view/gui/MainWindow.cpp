@@ -95,21 +95,30 @@ namespace src
 
             void MainWindow::initializeGUI()
             {
-                mControlPanel = new widgets::ControlPanel(*mAVManager, container::ViewElements::CONTROL_PANEL);
-                ui->controlPanelLayout->addWidget(mControlPanel, 0, 0);
+                mModifyParametersWidget = new widgets::ModifyParametersWidget(*mAVManager, container::ViewElements::AV_WIDGET);
+                ui->modifyParametersLayout->addWidget(mModifyParametersWidget, 0, 0);
 
                 mBenchmarkingWidget = new widgets::BenchmarkingWidget(*mBenchmark, container::ViewElements::BENCHMARKING_WIDGET);
                 ui->benchmarkLayout->addWidget(mBenchmarkingWidget, 0, 0);
+
+                mControlPanelWidget = new widgets::ControlPanelWidget(*mAVManager, container::ViewElements::CONTROL_PANEL);
+                ui->controlPanelLayout->addWidget(mControlPanelWidget, 0, 0);
+
             }
 
-            widgets::ControlPanel* MainWindow::getControlPanel()
+            widgets::ControlPanelWidget *MainWindow::getControlPanel()
             {
-                return mControlPanel;
+                return mControlPanelWidget;
             }
 
             widgets::BenchmarkingWidget *MainWindow::getBenchmarkingWidget()
             {
                 return mBenchmarkingWidget;
+            }
+
+            widgets::ModifyParametersWidget *MainWindow::getModifyParametersWidget()
+            {
+                return mModifyParametersWidget;
             }
 
         }

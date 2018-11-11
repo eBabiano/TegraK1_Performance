@@ -6,6 +6,7 @@ find_package(Qt5Core REQUIRED)
 find_package(Qt5Gui REQUIRED)
 find_package(Qt5Widgets REQUIRED)
 find_package(Qt5OpenGL REQUIRED)
+find_package(Qt5PrintSupport REQUIRED)
 find_package(OpenCV REQUIRED)
 find_package(OpenGL)
 
@@ -27,7 +28,7 @@ file(GLOB_RECURSE sources "src/application/*.cpp"
 
 file(GLOB_RECURSE views "src/view/*.cpp"
                         "src/view/*.hpp")
-file(GLOB_RECURSE widgets_headers "src/view/gui/*.hpp")
+file(GLOB_RECURSE widgets_headers "src/view/gui/*.h*")
 file(GLOB_RECURSE widgets_forms "src/view/gui/*.ui")
 
 file(GLOB util "src/util/*.hpp"
@@ -45,7 +46,7 @@ qt5_wrap_ui(FORM_H ${widgets_forms})
 qt5_wrap_cpp(HEADER_H ${widgets_headers})
 
 ADD_LIBRARY(TegraK1_Performance_CONFIG ${FORM_H} ${HEADER_H})
-QT5_USE_MODULES(TegraK1_Performance_CONFIG Widgets)
+QT5_USE_MODULES(TegraK1_Performance_CONFIG Widgets PrintSupport)
 
 set(MAIN_SRC ${sources}
              ${views}
@@ -63,21 +64,24 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS})
 include_directories(${Qt5Core_INCLUDE_DIRS})
 include_directories(${Qt5Gui_INCLUDE_DIRS})
 include_directories(${Qt5OpenGL_INCLUDE_DIRS})
+include_directories(${Qt5PrintSupport_INCLUDE_DIRS})
 include_directories(${OpenCV_INCLUDE_DIRS})
+
 #include_directories(${FLYCAPTURE2_LIB})
 
 add_executable(TegraK1_Performance ${MAIN_SRC}
                                 ${FORM_H}
                                 ${HEADER_H})
 
-QT5_USE_MODULES(TegraK1_Performance Core Gui Widgets OpenGL)
+QT5_USE_MODULES(TegraK1_Performance Core Gui Widgets OpenGL PrintSupport)
 
 target_link_libraries(TegraK1_Performance  ${Qt5Core}
                                            ${Qt5Widgets}
                                            ${Qt5Gui}
                                            ${Qt5OpenGL}
                                            ${Boost_LIBRARIES}
-                                           ${OpenCV_LIBS})
+                                           ${OpenCV_LIBS}
+                                           ${Qt5PrintSupport})
                                         #   ${flycapture2})
 
 

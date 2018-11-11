@@ -34,21 +34,13 @@ namespace src
                     ui->fps->setText(fps.c_str());
                 }
 
-                void BenchmarkingWidget::on_playButton_clicked()
-                {
-                    notify(events::StartAVEvent(true));
-                }
 
-                void BenchmarkingWidget::on_stopButton_clicked()
-                {
-                    notify(events::StartAVEvent(false));
-
-                    std::string averageProccessigTime = util::String::getFixed(mBenchmark->getWeightedAverageProcessingTimeMillisec(), 2);
+           /*         std::string averageProccessigTime = util::String::getFixed(mBenchmark->getWeightedAverageProcessingTimeMillisec(), 2);
                     std::string fpsTime = std::to_string(mBenchmark->getWeightedAverageFramesPerSeconds());
 
                     ui->tpWeighted->setText(averageProccessigTime.c_str());
-                    ui->fpsWeighted->setText(fpsTime.c_str());
-                }
+                    ui->fpsWeighted->setText(fpsTime.c_str());*/
+
             }
         }
     }

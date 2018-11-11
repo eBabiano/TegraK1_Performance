@@ -3,8 +3,9 @@
 
 #include <QWidget>
 
-#include <src/view/gui/widgets/ControlPanel.hpp>
+#include <src/view/gui/widgets/ModifyParametersWidget.hpp>
 #include <src/view/gui/widgets/BenchmarkingWidget.hpp>
+#include <src/view/gui/widgets/ControlPanelWidget.hpp>
 
 #include <src/view/gui/OpenCVVideoPlayer.hpp>
 #include <src/view/av/AVRenderManager.hpp>
@@ -33,8 +34,9 @@ namespace src
                                     , QWidget *parent = 0);
                 virtual ~MainWindow();
 
-                widgets::ControlPanel* getControlPanel();
+                widgets::ControlPanelWidget* getControlPanel();
                 widgets::BenchmarkingWidget* getBenchmarkingWidget();
+                widgets::ModifyParametersWidget* getModifyParametersWidget();
 
             protected:
                 void timerEvent(QTimerEvent *event);
@@ -51,8 +53,9 @@ namespace src
                 bool mFlipVert;
                 bool mFlipHoriz;
 
-                widgets::ControlPanel* mControlPanel;
+                widgets::ModifyParametersWidget* mModifyParametersWidget;
                 widgets::BenchmarkingWidget* mBenchmarkingWidget;
+                widgets::ControlPanelWidget* mControlPanelWidget;
                 cv::Mat mImage;
 
                 bool mIsPainted;

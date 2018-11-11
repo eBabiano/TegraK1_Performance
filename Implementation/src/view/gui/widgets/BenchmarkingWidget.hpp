@@ -23,7 +23,6 @@ namespace src
                 class BenchmarkingWidget
                         : public QWidget
                         , public container::Container
-                        , public util::Observable<events::StartAVEvent>
                         , public util::Observer<model::events::BenchmarkUpdatedEvent>
                 {
                     Q_OBJECT
@@ -34,15 +33,10 @@ namespace src
 
                     virtual void observableUpdated(const model::events::BenchmarkUpdatedEvent& event);
 
-                    private slots:
-                        void on_playButton_clicked();
-                        void on_stopButton_clicked();
-
                     private:
                         Ui::BenchmarkingWidget *ui;
                         model::Benchmark* mBenchmark;
 
-                        using util::Observable<events::StartAVEvent>::notify;
                 };
             }
         }

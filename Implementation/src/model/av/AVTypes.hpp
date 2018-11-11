@@ -12,7 +12,6 @@ namespace src
             class AVTypes
             {
                 public:
-                    static const std::string AV_TEST_GPU_CPU;
                     static const std::string FACE_DETECTION;
                     static const std::string BACKGROUND_SUBTRACTOR;
                     static const std::string OPTICAL_FLOW;
