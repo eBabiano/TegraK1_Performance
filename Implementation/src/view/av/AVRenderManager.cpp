@@ -24,7 +24,7 @@ namespace src
                mAVViews[model::av::AVTypes::OPTICAL_FLOW] = new view::av::OpticalFlow();
                mAVViews[model::av::AVTypes::PEDESTRIAN_DETECTOR] = new view::av::PedestrianDetection();
 
-               mAVManager->attach(*this);
+               mAVManager->src::util::Observable<model::av::events::AVStarted>::attach(*this);
 
                for (auto& view : mAVViews)
                {

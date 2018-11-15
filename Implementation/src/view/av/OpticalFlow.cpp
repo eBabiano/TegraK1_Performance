@@ -109,6 +109,8 @@ namespace src
 
                while(mIsRunningThread)
                {
+                   mMutex.lock();
+
                    getCapturedImage().copyTo(image);
                    if( !image.empty() )
                    {
@@ -174,6 +176,8 @@ namespace src
                        std::swap(points[1], points[0]);
                        cv::swap(prevGray, gray);
                    }
+                   mMutex.unlock();
+
                }
            }
 

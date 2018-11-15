@@ -1,5 +1,9 @@
 #include <src/view/gui/widgets/ModifyParametersWidget.hpp>
 #include <src/view/gui/container/ViewElements.hpp>
+#include <src/view/gui/widgets/av/BackgroundSubstractorWidget.hpp>
+#include <src/view/gui/widgets/av/FaceDetectionWidget.hpp>
+#include <src/view/gui/widgets/av/OpticalFlowWidget.hpp>
+#include <src/view/gui/widgets/av/PedestrianDetectorWidget.hpp>
 #include <src/model/av/AVTypes.hpp>
 
 #include "ui_ModifyParametersWidget.h"
@@ -12,7 +16,7 @@ namespace src
         {
             namespace widgets
             {
-                ModifyParametersWidget::ModifyParametersWidget(const model::av::AVManager& model, const int &element, QWidget *parent) :
+                ModifyParametersWidget::ModifyParametersWidget(model::av::AVManager& model, const int &element, QWidget *parent) :
                     QWidget(parent),
                     ui(new Ui::ModifyParametersWidget)
                   , Container(element)
@@ -24,13 +28,14 @@ namespace src
 
                     addView(*this);
 
+                    initAVParameters();
+
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::BACKGROUND_SUBTRACTOR.c_str());
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::FACE_DETECTION.c_str());
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::OPTICAL_FLOW.c_str());
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::PEDESTRIAN_DETECTOR.c_str());
 
-                    ui->gpuRadioButton->setChecked(false);
-                    ui->cpuRadioButton->setChecked(true);
+                    mAVManager->src::util::Observable<model::av::events::AVSelectedEvent>::attach(*this);
                 }
 
                 ModifyParametersWidget::~ModifyParametersWidget()
@@ -38,30 +43,40 @@ namespace src
                     delete ui;
                 }
 
-                void ModifyParametersWidget::on_gpuRadioButton_toggled(bool checked)
+                void ModifyParametersWidget::observableUpdated(const model::av::events::AVSelectedEvent &event)
                 {
-                    if (checked)
-                    {
-                        mIsGPU = true;
-                        ui->cpuRadioButton->setChecked(false);
-                    }
-                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
-                }
+                    mAVWidgetVector.at(mAvSelected)->setVisible(false);
+                    mAvSelected = event.getType();
 
-                void ModifyParametersWidget::on_cpuRadioButton_toggled(bool checked)
-                {
-                    if (checked)
+                    for (auto& widget : mAVWidgetVector)
                     {
-                        mIsGPU = false;
-                        ui->gpuRadioButton->setChecked(false);
+                        if (widget.first == mAvSelected)
+                        {
+                            widget.second->setVisible(true);
+                        }
                     }
-                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
                 }
 
                 void ModifyParametersWidget::on_avListComboBox_activated(const QString &arg)
                 {
-                    mAvSelected = arg.toUtf8().constData();
-                    notify(events::SelectAVEvent(mAvSelected, mIsGPU));
+                    notify(events::SelectAVEvent(arg.toUtf8().constData(), mIsGPU));
+                }
+
+                void ModifyParametersWidget::initAVParameters()
+                {
+                    mAVWidgetVector[src::model::av::AVTypes::BACKGROUND_SUBTRACTOR] = new av::BackgroundSubstractorWidget(*mAVManager);
+                    mAVWidgetVector[src::model::av::AVTypes::FACE_DETECTION] = new av::FaceDetectionWidget(*mAVManager);
+                    mAVWidgetVector[src::model::av::AVTypes::OPTICAL_FLOW] = new av::OpticalFlowWidget(*mAVManager);
+                    mAVWidgetVector[src::model::av::AVTypes::PEDESTRIAN_DETECTOR] = new av::PedestrianDetectorWidget(*mAVManager);
+
+                    for (auto& widget : mAVWidgetVector)
+                    {
+                        ui->modifyParamLayout->addWidget(widget.second);
+                        if (widget.first != mAvSelected)
+                        {
+                            widget.second->setVisible(false);
+                        }
+                    }
                 }
             }
         }

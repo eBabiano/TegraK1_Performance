@@ -28,7 +28,7 @@ namespace src
                 Q_OBJECT
 
             public:
-                explicit MainWindow(model::Benchmark &benchmark, const model::av::AVManager& avManager
+                explicit MainWindow(model::Benchmark &benchmark, model::av::AVManager &avManager
                                     , av::AVRenderManager &avRenderManager
                                     , src::view::gui::OpenCVVideoPlayer& videoPlayer
                                     , QWidget *parent = 0);
@@ -38,7 +38,7 @@ namespace src
                 widgets::BenchmarkingWidget* getBenchmarkingWidget();
                 widgets::ModifyParametersWidget* getModifyParametersWidget();
 
-            protected:
+            public slots:
                 void timerEvent(QTimerEvent *event);
 
             private:
@@ -47,7 +47,7 @@ namespace src
                 Ui::MainWindow *ui;
                 src::view::gui::OpenCVVideoPlayer* mVideoPlayer;
                 src::view::av::AVRenderManager* mAVRenderManager;
-                const src::model::av::AVManager* mAVManager;
+                src::model::av::AVManager* mAVManager;
                 src::model::Benchmark* mBenchmark;
 
                 bool mFlipVert;
@@ -59,7 +59,6 @@ namespace src
                 cv::Mat mImage;
 
                 bool mIsPainted;
-
             };
         }
     }

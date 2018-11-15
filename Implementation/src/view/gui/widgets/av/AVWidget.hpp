@@ -1,11 +1,8 @@
 #ifndef AVWidget_HPP
 #define AVWidget_HPP
 
+#include <src/model/av/AVManager.hpp>
 #include <QWidget>
-
-namespace Ui {
-    class AVWidget;
-}
 
 namespace src
 {
@@ -17,16 +14,18 @@ namespace src
             {
                 namespace av
                 {
-                    class AVWidget : public QWidget
+                    class AVWidget
+                            : public QWidget
                     {
                         Q_OBJECT
 
                         public:
-                            explicit AVWidget(QWidget *parent = 0);
-                            ~AVWidget();
+                            AVWidget(const model::av::AVManager& avManager, QWidget *parent = 0);
 
-                        private:
-                            Ui::AVWidget *ui;
+                            void hidden();
+
+                    protected:
+                            const model::av::AVManager* mAVManager;
                     };
                 }
             }

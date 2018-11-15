@@ -14,15 +14,15 @@ namespace src
                class UpdateBenchmarkEvent
                {
                    public:
-                       UpdateBenchmarkEvent(double timeProcMillis, double fps, const std::string &device);
+                       UpdateBenchmarkEvent(double timeProcMillis, int fps, const std::string &device);
 
                        double getTimeProcMillis() const;
                        std::string getDevice() const;
-                       double getFPS() const;
+                       int getFPS() const;
 
                private:
                        double mTimeProcMillis;
-                       double mFPS;
+                       int mFPS;
                        std::string mDevice;
                };
            }

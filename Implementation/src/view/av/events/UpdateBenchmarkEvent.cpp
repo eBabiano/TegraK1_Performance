@@ -8,7 +8,7 @@ namespace src
        {
            namespace events
            {
-               UpdateBenchmarkEvent::UpdateBenchmarkEvent(double timeProcMillis, double fps, const std::string& device)
+               UpdateBenchmarkEvent::UpdateBenchmarkEvent(double timeProcMillis, int fps, const std::string& device)
                    : mTimeProcMillis(timeProcMillis)
                    , mDevice(device)
                    , mFPS(fps)
@@ -25,7 +25,7 @@ namespace src
                    return mDevice;
                }
 
-               double UpdateBenchmarkEvent::getFPS() const
+               int UpdateBenchmarkEvent::getFPS() const
                {
                    return mFPS;
                }

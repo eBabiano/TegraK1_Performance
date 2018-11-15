@@ -3,6 +3,9 @@
 
 #include <src/util/Observable.hpp>
 #include <src/model/av/events/AVStarted.hpp>
+#include <src/model/av/events/AVSelectedEvent.hpp>
+
+#include <src/model/av/AV.hpp>
 
 #include <map>
 
@@ -14,6 +17,7 @@ namespace src
         {
             class AVManager
                     : public util::Observable<events::AVStarted>
+                    , public util::Observable<events::AVSelectedEvent>
             {
                 public:
                     AVManager();
@@ -26,12 +30,16 @@ namespace src
                     bool getIsGPU() const;
                     void setIsGPU(bool value);
 
+                    AV* getAlgorithm(const std::string& type);
+
             private:
                     std::string mSelectedType;
                     bool mIsGPU;
 
+                    std::map<std::string, AV*> mAVVector;
 
                     using util::Observable<events::AVStarted>::notify;
+                    using util::Observable<events::AVSelectedEvent>::notify;
 
             };
         }

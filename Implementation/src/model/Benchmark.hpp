@@ -33,10 +33,17 @@ namespace src
                 bool getIsGPU() const;
                 void setIsGPU(bool value);
 
+                void updateCurrentFrames();
+                void clearCurrentFrames();
+
+                void updateBenchmarking();
+                int getCurrentFrames() const;
+
             private:
                 double mProcessingTimeMillisec;
                 int mFramesPerSec;
                 bool mIsGPU;
+                int mCurrentFrames;
 
                 int mFrames;
                 double mWeightedAverageProcessingTimeMillisec;

@@ -6,6 +6,7 @@
 #include <opencv2/gpu/gpu.hpp>
 
 #include <boost/thread.hpp>
+#include <mutex>
 #include <ctime>
 
 #include <src/view/av/events/UpdateBenchmarkEvent.hpp>
@@ -49,6 +50,8 @@ namespace src
                    bool mIsGPU;
 
                    int mTotalFrames;
+
+                   std::mutex mMutex;
 
                private:
                    cv::Mat mCapturedImage;

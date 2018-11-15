@@ -18,6 +18,7 @@ namespace src
 
                while(mIsRunningThread)
                {
+                   mMutex.lock();
                    getCapturedImage().copyTo(frame);
 
                    if (!frame.empty())
@@ -55,6 +56,7 @@ namespace src
                        frame.copyTo(mImage);
 
                        updateBenchmark(t1, t2);
+                       mMutex.unlock();
                    }
                }
 

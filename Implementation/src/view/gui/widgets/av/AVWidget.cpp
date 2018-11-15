@@ -1,5 +1,4 @@
 #include <src/view/gui/widgets/av/AVWidget.hpp>
-#include "ui_AVWidget.h"
 
 namespace src
 {
@@ -11,16 +10,15 @@ namespace src
             {
                 namespace av
                 {
-                    AVWidget::AVWidget(QWidget *parent) :
-                        QWidget(parent),
-                        ui(new Ui::AVWidget)
+                    AVWidget::AVWidget(const model::av::AVManager& avManager, QWidget *parent)
+                        : QWidget(parent)
+                        , mAVManager(&avManager)
                     {
-                        ui->setupUi(this);
                     }
 
-                    AVWidget::~AVWidget()
+                    void AVWidget::hidden()
                     {
-                        delete ui;
+                        setVisible(false);
                     }
                 }
             }

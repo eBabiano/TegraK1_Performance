@@ -9,6 +9,7 @@ namespace src
             : mProcessingTimeMillisec(0.0)
             , mFramesPerSec(0)
             , mIsGPU(false)
+            , mCurrentFrames(0)
         {
         }
         double Benchmark::getProcessingTimeMillisec() const
@@ -20,7 +21,6 @@ namespace src
         {
             mProcessingTimeMillisecVector.push_back(mProcessingTimeMillisec);
             mProcessingTimeMillisec = value;
-            notify(events::BenchmarkUpdatedEvent());
         }
         int Benchmark::getFramesPerSec() const
         {
@@ -31,7 +31,6 @@ namespace src
         {
             mFramesPerSecondsVector.push_back(value);
             mFramesPerSec = value;
-            notify(events::BenchmarkUpdatedEvent());
         }
 
         int Benchmark::getFrames() const
@@ -87,6 +86,26 @@ namespace src
         void Benchmark::setIsGPU(bool value)
         {
             mIsGPU = value;
+        }
+
+        void Benchmark::updateCurrentFrames()
+        {
+            mCurrentFrames++;
+        }
+
+        void Benchmark::clearCurrentFrames()
+        {
+            mCurrentFrames = 0;
+        }
+
+        void Benchmark::updateBenchmarking()
+        {
+            notify(events::BenchmarkUpdatedEvent());
+        }
+
+        int Benchmark::getCurrentFrames() const
+        {
+            return mCurrentFrames;
         }
 
     }

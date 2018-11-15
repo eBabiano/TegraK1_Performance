@@ -1,0 +1,2 @@
+/home/ubuntu/TFG/TegraK1_Performance/Implementation/build/CMakeFiles/TegraK1_Performance.dir
+/home/ubuntu/TFG/TegraK1_Performance/Implementation/build/CMakeFiles/TegraK1_Performance_CONFIG.dir

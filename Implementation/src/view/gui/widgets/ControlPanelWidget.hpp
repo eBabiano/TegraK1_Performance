@@ -7,6 +7,8 @@
 #include <src/model/av/AVManager.hpp>
 
 #include <QWidget>
+#include <QTime>
+#include <QTimer>
 
 namespace Ui {
 class ControlPanelWidget;
@@ -31,6 +33,8 @@ namespace src
                         explicit ControlPanelWidget(const model::av::AVManager& model, const int &element, QWidget *parent = 0);
                         ~ControlPanelWidget();
 
+                    void timerEvent(QTimerEvent *event);
+
                     private slots:
                         void on_playButton_clicked();
                         void on_stopButton_clicked();
@@ -39,6 +43,9 @@ namespace src
                             Ui::ControlPanelWidget *ui;
 
                             using util::Observable<events::StartAVEvent>::notify;
+
+                           // QTime* mTime;
+                            bool mIsTimerRunning;
                 };
             }
         }
