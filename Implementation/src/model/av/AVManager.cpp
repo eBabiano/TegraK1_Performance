@@ -14,7 +14,6 @@ namespace src
         {
             AVManager::AVManager()
                 : mSelectedType(AVTypes::BACKGROUND_SUBTRACTOR)
-                , mIsGPU(false)
             {
                 mAVVector[AVTypes::BACKGROUND_SUBTRACTOR] = new BackgroundSubstractor();
                 mAVVector[AVTypes::FACE_DETECTION] = new FaceDetection();
@@ -35,22 +34,12 @@ namespace src
 
             void AVManager::play()
             {
-                notify(events::AVStarted(mSelectedType, true, mIsGPU));
+                notify(events::AVStarted(mSelectedType, true));
             }
 
             void AVManager::stop()
             {
-                notify(events::AVStarted(mSelectedType, false, mIsGPU));
-            }
-
-            bool AVManager::getIsGPU() const
-            {
-                return mIsGPU;
-            }
-            
-            void AVManager::setIsGPU(bool value)
-            {
-                mIsGPU = value;
+                notify(events::AVStarted(mSelectedType, false));
             }
 
             AV *AVManager::getAlgorithm(const std::string &type)

@@ -14,6 +14,12 @@ namespace src
             {
                 public:
                     FaceDetection();
+
+                    virtual std::string getProcessorType() const;
+                    virtual void setProcessorType(const std::string& type);
+
+                private:
+                    std::string mProcessorType;
             };
         }
     }

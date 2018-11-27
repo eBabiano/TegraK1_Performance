@@ -14,16 +14,14 @@ namespace src
                class AVStarted
                {
                    public:
-                       AVStarted(const std::string& type, bool activated, bool isGPU);
+                       AVStarted(const std::string& type, bool activated);
 
                        std::string getType() const;
                        bool getIsActivated() const;
-                       bool getIsGPU() const;
 
                     private:
                        std::string mType;
                        bool mIsActivated;
-                       bool mIsGPU;
                };
            }
        }

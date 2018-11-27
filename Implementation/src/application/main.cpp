@@ -12,6 +12,7 @@
 #include <src/controller/av/StartAVController.hpp>
 #include <src/controller/av/SelectAVController.hpp>
 #include <src/controller/UpdateBenchmarkController.hpp>
+#include <src/controller/ModifyAlgorithmParametersController.hpp>
 
 #include <src/util/Observer.hpp>
 
@@ -44,6 +45,7 @@ int main(int argc, char* argv[])
     src::controller::av::StartAVController* mStartAVController = new src::controller::av::StartAVController(*mAVManager);
     src::controller::av::SelectAVController* mSelectAVController = new src::controller::av::SelectAVController(*mAVManager);
     src::controller::UpdateBenchmarkController* mUpdateBenchmarkController = new src::controller::UpdateBenchmarkController(*mBenchmark);
+    src::controller::ModifyAlgorithmParametersController* mModifyAlgorithmParametersController = new src::controller::ModifyAlgorithmParametersController(*mAVManager);
 
     //Views
     src::view::av::AVRenderManager* mAVRenderManager = new src::view::av::AVRenderManager(*mAVManager, *mUpdateBenchmarkController);
@@ -56,6 +58,7 @@ int main(int argc, char* argv[])
     std::cout << "OpenCV version: " << CV_VERSION << std::endl;
 
     src::view::gui::MainWindow* mainWindow = new src::view::gui::MainWindow(*mBenchmark, *mAVManager, *mAVRenderManager, *videoPlayer);
+    mainWindow->setModifyAlgorithmParametersController(*mModifyAlgorithmParametersController);
 
     //LINKERS
     mainWindow->getControlPanel()->src::util::Observable<src::view::gui::events::StartAVEvent>::attach(*mStartAVController);

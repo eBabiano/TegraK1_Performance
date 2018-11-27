@@ -14,6 +14,13 @@ namespace src
             {
                 public:
                     BackgroundSubstractor();
+
+                    virtual int getLearningRate() const;
+                    virtual void setLearningRate(int learningRate);
+
+            private:
+                    int mLearningRate;
+
             };
         }
     }

@@ -6,6 +6,11 @@
 #include <src/view/gui/widgets/av/PedestrianDetectorWidget.hpp>
 #include <src/model/av/AVTypes.hpp>
 
+#include <src/view/gui/events/ModifyBackgroundSubstractorEvent.hpp>
+#include <src/view/gui/events/ModifyFaceDetectionEvent.hpp>
+#include <src/view/gui/events/ModifyOpticalFlowEvent.hpp>
+#include <src/view/gui/events/ModifyPedestrianDetectorEvent.hpp>
+
 #include "ui_ModifyParametersWidget.h"
 
 namespace src
@@ -28,14 +33,13 @@ namespace src
 
                     addView(*this);
 
-                    initAVParameters();
-
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::BACKGROUND_SUBTRACTOR.c_str());
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::FACE_DETECTION.c_str());
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::OPTICAL_FLOW.c_str());
                     ui->avListComboBox->addItem(QIcon(), model::av::AVTypes::PEDESTRIAN_DETECTOR.c_str());
 
                     mAVManager->src::util::Observable<model::av::events::AVSelectedEvent>::attach(*this);
+
                 }
 
                 ModifyParametersWidget::~ModifyParametersWidget()
@@ -69,6 +73,16 @@ namespace src
                     mAVWidgetVector[src::model::av::AVTypes::OPTICAL_FLOW] = new av::OpticalFlowWidget(*mAVManager);
                     mAVWidgetVector[src::model::av::AVTypes::PEDESTRIAN_DETECTOR] = new av::PedestrianDetectorWidget(*mAVManager);
 
+                    mAVWidgetVector.at(src::model::av::AVTypes::BACKGROUND_SUBTRACTOR)->
+                            src::util::Observable<view::gui::events::ModifyBackgroundSubstractorEvent>::attach(*mModifyAlgorithmParametersController);
+                    mAVWidgetVector.at(src::model::av::AVTypes::FACE_DETECTION)->
+                            src::util::Observable<view::gui::events::ModifyFaceDetectionEvent>::attach(*mModifyAlgorithmParametersController);
+                    mAVWidgetVector.at(src::model::av::AVTypes::OPTICAL_FLOW)->
+                            src::util::Observable<view::gui::events::ModifyOpticalFlowEvent>::attach(*mModifyAlgorithmParametersController);
+                    mAVWidgetVector.at(src::model::av::AVTypes::PEDESTRIAN_DETECTOR)->
+                            src::util::Observable<view::gui::events::ModifyPedestrianDetectorEvent>::attach(*mModifyAlgorithmParametersController);
+
+
                     for (auto& widget : mAVWidgetVector)
                     {
                         ui->modifyParamLayout->addWidget(widget.second);
@@ -78,6 +92,16 @@ namespace src
                         }
                     }
                 }
+                controller::ModifyAlgorithmParametersController *ModifyParametersWidget::getModifyAlgorithmParametersController() const
+                {
+                    return mModifyAlgorithmParametersController;
+                }
+
+                void ModifyParametersWidget::setModifyAlgorithmParametersController(controller::ModifyAlgorithmParametersController& value)
+                {
+                    mModifyAlgorithmParametersController = &value;
+                }
+
             }
         }
     }

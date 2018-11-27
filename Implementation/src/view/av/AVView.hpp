@@ -42,6 +42,10 @@ namespace src
 
                    void setTotalFrames(int value);
 
+                   //BACKGROUND SUBSTRACTOR
+                   virtual void setLearningRate(double value){}
+
+
                protected:
                    void updateBenchmark(double initTime, double endTime);
                    boost::thread* mThread;

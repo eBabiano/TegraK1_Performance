@@ -1,6 +1,6 @@
 #include <src/view/gui/widgets/av/PedestrianDetectorWidget.hpp>
 #include "ui_PedestrianDetectorWidget.h"
-//#include "ui_AVWidget.h"
+#include <src/model/av/AVTypes.hpp>
 
 namespace src
 {
@@ -12,11 +12,21 @@ namespace src
             {
                 namespace av
                 {
-                    PedestrianDetectorWidget::PedestrianDetectorWidget(const model::av::AVManager &avManager, QWidget *parent) :
+                    PedestrianDetectorWidget::PedestrianDetectorWidget(model::av::AVManager &avManager, QWidget *parent) :
                         AVWidget(avManager, parent) ,
                         ui(new Ui::PedestrianDetectorWidget)
                     {
                         ui->setupUi(this);
+
+                        if (mAVManager->getAlgorithm(model::av::AVTypes::PEDESTRIAN_DETECTOR)->
+                                getProcessorType() == model::av::AVTypes::CPU)
+                        {
+                            ui->cpuRadioButton->setChecked(true);
+                        }
+                        else
+                        {
+                            ui->gpuRadioButton->setChecked(true);
+                        }
                     }
 
                     PedestrianDetectorWidget::~PedestrianDetectorWidget()
@@ -24,10 +34,18 @@ namespace src
                         delete ui;
                     }
 
-                  /*  void PedestrianDetectorWidget::init()
+                    void PedestrianDetectorWidget::on_cpuRadioButton_toggled(bool checked)
                     {
-                        getParent()->parametersLayout->addWidget(this);
-                    }*/
+                        ui->gpuRadioButton->setChecked(false);
+                        notify(events::ModifyPedestrianDetectorEvent(src::model::av::AVTypes::CPU));
+                    }
+
+                    void PedestrianDetectorWidget::on_gpuRadioButton_toggled(bool checked)
+                    {
+                        ui->cpuRadioButton->setChecked(false);
+                        notify(events::ModifyPedestrianDetectorEvent(src::model::av::AVTypes::GPU));
+                    }
+
                 }
             }
         }

@@ -34,7 +34,6 @@ namespace src
 
             private:
                     std::string mSelectedType;
-                    bool mIsGPU;
 
                     std::map<std::string, AV*> mAVVector;
 

@@ -17,6 +17,12 @@ namespace src
 
                    virtual void runCPUThread();
                    virtual void runGPUThread();
+
+                   virtual void setLearningRate(double value);
+
+           private:
+                   double mLearningRate;
+                   std::mutex mMutex;
            };
        }
     }

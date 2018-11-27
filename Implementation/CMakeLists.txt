@@ -17,9 +17,15 @@ set(CMAKE_CXX_FLAGS "-g -Wall -fPIC -std=c++11")
 #SET(CMAKE_AUTOMOC ON)
 SET(CMAKE_INCLUDE_CURRENT_DIR ON)
 
-#add_library(flycapture2 SHARED IMPORTED)
 
-#SET_PROPERTY(TARGET flycapture2 PROPERTY IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/lib/flycpature2/lib/*.so")
+#SET_PROPERTY(TARGET flycapture2 PROPERTY IMPORTED_LOCATION "${CMAKE_SOURCE_DIR}/lib/flycpature2/lib/*")
+find_library(FLYCAPTURE2LIB NAMES libflycapture2.so flycapture)
+
+IF(FLYCAPTURE2LIB)
+message(STATUS Flycapture2 finded!!!!!!!!)
+ELSE(FLYCAPTURE2LIB)
+message(STATUS Flycapture2 not found...)
+ENDIF(FLYCAPTURE2LIB)
 
 INCLUDE_DIRECTORIES("${PROJECT_SOURCE_DIR}")
 
@@ -40,7 +46,7 @@ file(GLOB_RECURSE controller "src/controller/*.hpp"
 file(GLOB_RECURSE model "src/model/*.hpp"
                         "src/model/*.cpp")
 
-#file(GLOB_RECURSE flycapture2 "lib/flycapture2/include/*.h")
+file(GLOB_RECURSE flycapture2_include "lib/flycapture2/include/*.h")
 
 qt5_wrap_ui(FORM_H ${widgets_forms})
 qt5_wrap_cpp(HEADER_H ${widgets_headers})
@@ -48,14 +54,16 @@ qt5_wrap_cpp(HEADER_H ${widgets_headers})
 ADD_LIBRARY(TegraK1_Performance_CONFIG ${FORM_H} ${HEADER_H})
 QT5_USE_MODULES(TegraK1_Performance_CONFIG Widgets PrintSupport)
 
+add_library(flycapture2 SHARED IMPORTED)
+
 set(MAIN_SRC ${sources}
              ${views}
              ${widgets_headers}
              ${widgets_forms}
              ${util}
              ${controller}
-             ${model})
-             #${flycapture2})
+             ${model}
+             ${flycapture2_include})
 
 #################### PROJECT DEPENDENCIES #######################################
 
@@ -81,7 +89,7 @@ target_link_libraries(TegraK1_Performance  ${Qt5Core}
                                            ${Qt5OpenGL}
                                            ${Boost_LIBRARIES}
                                            ${OpenCV_LIBS}
-                                           ${Qt5PrintSupport})
-                                        #   ${flycapture2})
+                                           ${Qt5PrintSupport}
+                                           ${FLYCAPTURE2LIB})
 
 

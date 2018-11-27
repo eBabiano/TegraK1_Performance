@@ -7,6 +7,7 @@ namespace src
        namespace av
        {
            BackgroundSubtractor::BackgroundSubtractor()
+               : mLearningRate(0.0)
            {
            }
 
@@ -29,7 +30,7 @@ namespace src
                            cv::cvtColor(frame, frame_gray, CV_RGB2GRAY);
 
                            t1 = clock();
-                           mog2(frame_gray, frame_gray, 0.0);
+                           mog2(frame_gray, frame_gray, mLearningRate);
                            t2 = clock();
 
                            frame_gray.copyTo(mImage);
@@ -45,6 +46,12 @@ namespace src
            {
 
            }
+
+           void BackgroundSubtractor::setLearningRate(double value)
+           {
+               mLearningRate = value;
+           }
+
        }
     }
 }

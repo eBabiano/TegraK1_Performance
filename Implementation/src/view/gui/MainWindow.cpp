@@ -64,6 +64,12 @@ namespace src
                 return mModifyParametersWidget;
             }
 
+            void MainWindow::setModifyAlgorithmParametersController(controller::ModifyAlgorithmParametersController &ModifyAlgorithmParametersController)
+            {
+                mModifyParametersWidget->setModifyAlgorithmParametersController(ModifyAlgorithmParametersController);
+                mModifyParametersWidget->initAVParameters();
+            }
+
             void MainWindow::timerEvent(QTimerEvent *event)
             {
                 /*   if( mFlipVert && mFlipHoriz )
@@ -109,7 +115,6 @@ namespace src
                    // Show the image
                    //mVideoPlayer->runVideoPlayerInput();
                    mVideoPlayer->runVideoPlayerOutput(mAVRenderManager->getImageForRender(), false);
-                   ///mBenchmarkingWidget->plot();
 
    /*                double toc = (cvGetTickCount() - tic) / cvGetTickFrequency();
 

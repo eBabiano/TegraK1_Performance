@@ -24,13 +24,17 @@ namespace src
                         Q_OBJECT
 
                     public:
-                        explicit FaceDetectionWidget(const model::av::AVManager& avManager, QWidget *parent = 0);
+                        explicit FaceDetectionWidget(model::av::AVManager &avManager, QWidget *parent = 0);
                         ~FaceDetectionWidget();
 
-                      //  virtual void init();
+                    private slots:
+                        void on_cpuRadioButton_toggled(bool checked);
+
+                        void on_gpuRadioButton_toggled(bool checked);
 
                     private:
                         Ui::FaceDetectionWidget *ui;
+
                     };
                 }
             }

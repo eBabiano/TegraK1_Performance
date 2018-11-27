@@ -67,7 +67,9 @@ namespace src
 
            void AVView::resetImage()
            {
+               mMutex.lock();
                mImage = cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+               mMutex.unlock();
            }
 
            void AVView::activateGPU(bool activate)

@@ -1,8 +1,0 @@
--I/usr/include/opencv
--I/usr/include
--I/home/ubuntu/TFG/TegraK1_Performance/Implementation
--I/home/ubuntu/TFG/TegraK1_Performance/Implementation
--I/home/ubuntu/TFG/TegraK1_Performance/Implementation/build
--o
-/home/ubuntu/TFG/TegraK1_Performance/Implementation/build/src/view/gui/events/moc_StartAVEvent.cpp
-/home/ubuntu/TFG/TegraK1_Performance/Implementation/src/view/gui/events/StartAVEvent.hpp

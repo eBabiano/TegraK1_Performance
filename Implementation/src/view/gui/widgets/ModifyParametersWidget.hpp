@@ -7,6 +7,7 @@
 #include <src/util/Observable.hpp>
 #include <src/model/av/AVManager.hpp>
 #include <src/model/av/events/AVSelectedEvent.hpp>
+#include <src/controller/ModifyAlgorithmParametersController.hpp>
 #include <QWidget>
 
 namespace Ui {
@@ -35,13 +36,16 @@ namespace src
 
                     virtual void observableUpdated(const model::av::events::AVSelectedEvent& event);
 
+                    controller::ModifyAlgorithmParametersController *getModifyAlgorithmParametersController() const;
+                    void setModifyAlgorithmParametersController(controller::ModifyAlgorithmParametersController& value);
+                    void initAVParameters();
+
                 private slots:
                     void on_avListComboBox_activated(const QString &arg);
 
                 private:
-                        void initAVParameters();
 
-                        Ui::ModifyParametersWidget *ui;
+                    Ui::ModifyParametersWidget *ui;
                         model::av::AVManager* mAVManager;
 
                         std::string mAvSelected;
@@ -49,6 +53,8 @@ namespace src
 
                         std::map<std::string, av::AVWidget*> mAVWidgetVector;
                         using util::Observable<events::SelectAVEvent>::notify;
+
+                        controller::ModifyAlgorithmParametersController* mModifyAlgorithmParametersController;
                 };
             }
         }

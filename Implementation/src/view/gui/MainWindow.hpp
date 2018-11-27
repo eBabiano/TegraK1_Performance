@@ -3,6 +3,8 @@
 
 #include <QWidget>
 
+#include <src/controller/ModifyAlgorithmParametersController.hpp>
+
 #include <src/view/gui/widgets/ModifyParametersWidget.hpp>
 #include <src/view/gui/widgets/BenchmarkingWidget.hpp>
 #include <src/view/gui/widgets/ControlPanelWidget.hpp>
@@ -37,6 +39,8 @@ namespace src
                 widgets::ControlPanelWidget* getControlPanel();
                 widgets::BenchmarkingWidget* getBenchmarkingWidget();
                 widgets::ModifyParametersWidget* getModifyParametersWidget();
+
+                void setModifyAlgorithmParametersController(controller::ModifyAlgorithmParametersController& ModifyAlgorithmParametersController);
 
             public slots:
                 void timerEvent(QTimerEvent *event);

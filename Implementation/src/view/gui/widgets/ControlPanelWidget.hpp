@@ -45,7 +45,7 @@ namespace src
                             using util::Observable<events::StartAVEvent>::notify;
 
                            // QTime* mTime;
-                            bool mIsTimerRunning;
+                            bool mIsRunning;
                 };
             }
         }

@@ -14,7 +14,6 @@ namespace src
             void SelectAVController::observableUpdated(const view::gui::events::SelectAVEvent &event)
             {
                 mAVManager->selectAV(event.getType());
-                mAVManager->setIsGPU(event.getIsGPU());
             }
         }
     }

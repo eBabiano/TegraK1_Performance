@@ -26,6 +26,15 @@ namespace src
 
                mAVManager->src::util::Observable<model::av::events::AVStarted>::attach(*this);
 
+               mAVManager->getAlgorithm(model::av::AVTypes::FACE_DETECTION)->
+                       src::util::Observable<model::av::events::AlgorithmParametersModified>::attach(*this);
+               mAVManager->getAlgorithm(model::av::AVTypes::BACKGROUND_SUBTRACTOR)->
+                       src::util::Observable<model::av::events::AlgorithmParametersModified>::attach(*this);
+               mAVManager->getAlgorithm(model::av::AVTypes::OPTICAL_FLOW)->
+                       src::util::Observable<model::av::events::AlgorithmParametersModified>::attach(*this);
+               mAVManager->getAlgorithm(model::av::AVTypes::PEDESTRIAN_DETECTOR)->
+                       src::util::Observable<model::av::events::AlgorithmParametersModified>::attach(*this);
+
                for (auto& view : mAVViews)
                {
                    view.second->src::util::Observable<view::av::events::UpdateBenchmarkEvent>::attach(updateBenchmarkController);
@@ -43,7 +52,6 @@ namespace src
            void AVRenderManager::observableUpdated(const model::av::events::AVStarted &event)
            {
                mSelectedAV = event.getType();
-               mAVViews.at(mSelectedAV)->activateGPU(event.getIsGPU());
                if (event.getIsActivated())
                {
                    mAVViews.at(mSelectedAV)->start();
@@ -52,6 +60,44 @@ namespace src
                {
                    mAVViews.at(mSelectedAV)->stop();
                }
+           }
+
+           void AVRenderManager::observableUpdated(const model::av::events::AlgorithmParametersModified &event)
+           {
+               if (event.getType() == model::av::AVTypes::BACKGROUND_SUBTRACTOR)
+               {
+                   int learningRate = mAVManager->getAlgorithm(mAVManager->getSelectedType())->getLearningRate();
+                   mAVViews.at(mAVManager->getSelectedType())->setLearningRate((double)learningRate / 100.0);
+               }
+               else if (event.getType() == model::av::AVTypes::PEDESTRIAN_DETECTOR)
+               {
+                   std::string processorType = mAVManager->getAlgorithm(mAVManager->getSelectedType())->getProcessorType();
+                   if (processorType == model::av::AVTypes::CPU)
+                   {
+                       mAVViews.at(mAVManager->getSelectedType())->activateGPU(false);
+                   }
+                   else
+                   {
+                       mAVViews.at(mAVManager->getSelectedType())->activateGPU(true);
+                   }
+               }
+               else if (event.getType() == model::av::AVTypes::FACE_DETECTION)
+               {
+                   std::string processorType = mAVManager->getAlgorithm(mAVManager->getSelectedType())->getProcessorType();
+                   if (processorType == model::av::AVTypes::CPU)
+                   {
+                       mAVViews.at(mAVManager->getSelectedType())->activateGPU(false);
+                   }
+                   else
+                   {
+                       mAVViews.at(mAVManager->getSelectedType())->activateGPU(true);
+                   }
+               }
+               else if (event.getType() == model::av::AVTypes::OPTICAL_FLOW)
+               {
+
+               }
+
            }
 
            cv::Mat AVRenderManager::getImageForRender()

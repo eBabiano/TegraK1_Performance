@@ -4,6 +4,11 @@
 #include <src/model/av/AVManager.hpp>
 #include <QWidget>
 
+#include <src/view/gui/events/ModifyBackgroundSubstractorEvent.hpp>
+#include <src/view/gui/events/ModifyFaceDetectionEvent.hpp>
+#include <src/view/gui/events/ModifyOpticalFlowEvent.hpp>
+#include <src/view/gui/events/ModifyPedestrianDetectorEvent.hpp>
+
 namespace src
 {
     namespace view
@@ -16,16 +21,27 @@ namespace src
                 {
                     class AVWidget
                             : public QWidget
+                            , public util::Observable<events::ModifyBackgroundSubstractorEvent>
+                            , public util::Observable<events::ModifyFaceDetectionEvent>
+                            , public util::Observable<events::ModifyOpticalFlowEvent>
+                            , public util::Observable<events::ModifyPedestrianDetectorEvent>
                     {
                         Q_OBJECT
 
                         public:
-                            AVWidget(const model::av::AVManager& avManager, QWidget *parent = 0);
+                            AVWidget(model::av::AVManager &avManager, QWidget *parent = 0);
 
                             void hidden();
 
                     protected:
-                            const model::av::AVManager* mAVManager;
+                            model::av::AVManager* mAVManager;
+
+                            using util::Observable<events::ModifyBackgroundSubstractorEvent>::notify;
+                            using util::Observable<events::ModifyFaceDetectionEvent>::notify;
+                            using util::Observable<events::ModifyOpticalFlowEvent>::notify;
+                            using util::Observable<events::ModifyPedestrianDetectorEvent>::notify;
+
+
                     };
                 }
             }

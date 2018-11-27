@@ -21,15 +21,18 @@ namespace src
                     class PedestrianDetectorWidget
                             : public AVWidget
                     {
-
+                        Q_OBJECT
                     public:
-                        explicit PedestrianDetectorWidget(const model::av::AVManager& avManager, QWidget *parent = 0);
+                        explicit PedestrianDetectorWidget(model::av::AVManager& avManager, QWidget *parent = 0);
                         ~PedestrianDetectorWidget();
 
-                      //  virtual void init();
+                    private slots:
+                        void on_cpuRadioButton_toggled(bool checked);
+                        void on_gpuRadioButton_toggled(bool checked);
 
                     private:
                         Ui::PedestrianDetectorWidget *ui;
+
                     };
                 }
             }

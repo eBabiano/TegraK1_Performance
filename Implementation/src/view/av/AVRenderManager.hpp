@@ -20,6 +20,7 @@ namespace src
        {
            class AVRenderManager
                    : public util::Observer<model::av::events::AVStarted>
+                   , public util::Observer<model::av::events::AlgorithmParametersModified>
            {
                public:
                    AVRenderManager(model::av::AVManager &avManager,
@@ -27,6 +28,7 @@ namespace src
                    ~AVRenderManager();
 
                    virtual void observableUpdated(const model::av::events::AVStarted& event);
+                   virtual void observableUpdated(const model::av::events::AlgorithmParametersModified& event);
 
                    cv::Mat getImageForRender();
                    void sumAllAVImages();

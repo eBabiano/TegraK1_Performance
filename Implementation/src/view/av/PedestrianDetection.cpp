@@ -15,6 +15,7 @@ namespace src
                unsigned t1, t2;
                double time;
                cv::Mat frame;
+               cv::HOGDescriptor hog;
 
                while(mIsRunningThread)
                {
@@ -25,7 +26,6 @@ namespace src
                    {
                        t1 = clock();
                        cv::cvtColor(frame, frame, CV_RGB2GRAY);
-                       cv::HOGDescriptor hog;
                        hog.setSVMDetector(cv::HOGDescriptor::getDefaultPeopleDetector());
 
                        std::vector<cv::Rect> found, found_filtered;
@@ -68,23 +68,25 @@ namespace src
                double time;
                cv::Mat frame;
                cv::gpu::GpuMat grayScaleFrame, capturedFrameGPU;
+         //      cv::Ptr<cv::cuda::HOG> gpu_hog = cv::cuda::HOG::create();
+               cv::gpu::HOGDescriptor hog;
 
                while(mIsRunningThread)
                {
                    capturedFrameGPU.upload(getCapturedImage());
+                   getCapturedImage().copyTo(frame);
 
                    if (!capturedFrameGPU.empty())
                    {
                        t1 = clock();
-                       cv::gpu::cvtColor(capturedFrameGPU, grayScaleFrame, CV_RGB2GRAY);
-                       cv::gpu::HOGDescriptor hog;
-                       hog.setSVMDetector(cv::gpu::HOGDescriptor::getDefaultPeopleDetector());
+                       cv::cvtColor(frame, frame, CV_RGB2GRAY);
+                       cv::gpu::cvtColor(capturedFrameGPU, capturedFrameGPU, CV_RGB2GRAY);
+                       hog.setSVMDetector(hog.getDefaultPeopleDetector());
 
                        std::vector<cv::Rect> found, found_filtered;
-                       hog.detectMultiScale(grayScaleFrame, found, 0, cv::Size(8,8), cv::Size(128,128), 1.05, 2);
+                       hog.detectMultiScale(capturedFrameGPU, found/*, 0, cv::Size(8,8), cv::Size(128,128), 1.05, 2*/);
                        t2 = clock();
 
-                       grayScaleFrame.download(frame);
                        size_t i, j;
                        for (i=0; i<found.size(); i++)
                        {

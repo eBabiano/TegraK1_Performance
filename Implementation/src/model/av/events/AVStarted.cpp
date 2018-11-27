@@ -8,10 +8,9 @@ namespace src
        {
            namespace events
            {
-               AVStarted::AVStarted(const std::string &type, bool activated, bool isGPU)
+               AVStarted::AVStarted(const std::string &type, bool activated)
                    : mType(type)
                    , mIsActivated(activated)
-                   , mIsGPU(isGPU)
                {
 
                }
@@ -24,11 +23,6 @@ namespace src
                bool AVStarted::getIsActivated() const
                {
                    return mIsActivated;
-               }
-
-               bool AVStarted::getIsGPU() const
-               {
-                   return mIsGPU;
                }
 
            }

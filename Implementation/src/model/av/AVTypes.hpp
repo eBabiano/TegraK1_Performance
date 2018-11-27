@@ -17,6 +17,9 @@ namespace src
                     static const std::string OPTICAL_FLOW;
                     static const std::string PEDESTRIAN_DETECTOR;
 
+                    static const std::string GPU;
+                    static const std::string CPU;
+
             };
         }
     }

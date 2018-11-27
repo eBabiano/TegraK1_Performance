@@ -75,6 +75,7 @@ namespace src
 
                while (mIsRunningThread)
                {
+                   mMutex.lock();
                    std::cout << "Running Face Detection thread" << std::endl;
 
                    getCapturedImage().copyTo(capturedFrameCPU);
@@ -119,6 +120,7 @@ namespace src
                    capturedFrameCPU.copyTo(mImage);
 
                    updateBenchmark(t1, t2);
+                   mMutex.unlock();
                }
            }
        }

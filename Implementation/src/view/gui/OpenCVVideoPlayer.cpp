@@ -1,8 +1,5 @@
 #include <src/view/gui/OpenCVVideoPlayer.hpp>
 #include <iostream>
-#include <lib/flycapture2/include/FlyCapture2.h>
-
-
 
 namespace src
 {

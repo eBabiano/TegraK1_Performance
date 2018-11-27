@@ -13,7 +13,7 @@ namespace src
                     QWidget(parent),
                     ui(new Ui::ControlPanelWidget)
                   , Container(element)
-                  , mIsTimerRunning(false)
+                  , mIsRunning(false)
                 {
                     ui->setupUi(this);
 
@@ -28,7 +28,7 @@ namespace src
 
                 void ControlPanelWidget::timerEvent(QTimerEvent *event)
                 {
-                    if (mIsTimerRunning)
+                    if (mIsRunning)
                     {
                    //     ui->minLabel->setText(QDateTime::fromTime_t(10).toUTC().toString("hh:mm:ss"));
                    //     ui->secLabel->setText(std::to_string(mTime->elapsed()).c_str());
@@ -37,15 +37,21 @@ namespace src
 
                 void ControlPanelWidget::on_playButton_clicked()
                 {
-                    notify(events::StartAVEvent(true));
-                //    mTime->restart();
-                    mIsTimerRunning = true;
+                    if (!mIsRunning)
+                    {
+                        notify(events::StartAVEvent(true));
+                    //    mTime->restart();
+                        mIsRunning = true;
+                    }
                 }
 
                 void ControlPanelWidget::on_stopButton_clicked()
                 {
-                    notify(events::StartAVEvent(false));
-                    mIsTimerRunning = false;
+                    if (mIsRunning)
+                    {
+                        notify(events::StartAVEvent(false));
+                        mIsRunning = false;
+                    }
                 }
             }
         }

@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <src/view/gui/widgets/av/AVWidget.hpp>
+#include <src/view/gui/events/ModifyOpticalFlowEvent.hpp>
 
 namespace Ui {
 class OpticalFlowWidget;
@@ -24,13 +25,13 @@ namespace src
                         Q_OBJECT
 
                     public:
-                        explicit OpticalFlowWidget(const model::av::AVManager& avManager, QWidget *parent = 0);
+                        explicit OpticalFlowWidget(model::av::AVManager &avManager, QWidget *parent = 0);
                         ~OpticalFlowWidget();
 
-                      //  virtual void init();
 
                     private:
                         Ui::OpticalFlowWidget *ui;
+
                     };
                 }
             }

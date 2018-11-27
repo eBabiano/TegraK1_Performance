@@ -11,7 +11,7 @@ namespace src
             {
                 namespace av
                 {
-                    BackgroundSubstractorWidget::BackgroundSubstractorWidget(const model::av::AVManager& avManager, QWidget *parent) :
+                    BackgroundSubstractorWidget::BackgroundSubstractorWidget(model::av::AVManager& avManager, QWidget *parent) :
                         AVWidget(avManager, parent),
                         ui(new Ui::BackgroundSubstractorWidget)
                     {
@@ -23,10 +23,11 @@ namespace src
                         delete ui;
                     }
 
-                   /* void BackgroundSubstractorWidget::init()
+                    void BackgroundSubstractorWidget::on_horizontalSlider_valueChanged(int value)
                     {
-                        getParent()->parametersLayout->addWidget(this);
-                    }*/
+                        notify(events::ModifyBackgroundSubstractorEvent(value));
+                    }
+
                 }
             }
         }

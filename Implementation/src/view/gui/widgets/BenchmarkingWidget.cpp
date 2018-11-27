@@ -28,7 +28,7 @@ namespace src
                     mBenchmark->src::util::Observable<model::events::BenchmarkUpdatedEvent>::attach(*this);
 
                     mTimer = new QTimer();
-                    mTimer->setInterval(800);
+                    mTimer->setInterval(1000);
                     assert(connect(mTimer, SIGNAL(timeout()), this, SLOT(plot())));
 
                     initGraph();
@@ -59,6 +59,7 @@ namespace src
                     }
                     else
                     {
+
                         mTimer->stop();
                         clearData();
 

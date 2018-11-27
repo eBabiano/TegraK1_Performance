@@ -3,6 +3,7 @@
 
 #include <QWidget>
 #include <src/view/gui/widgets/av/AVWidget.hpp>
+#include <stdio.h>
 
 namespace Ui {
 class BackgroundSubstractorWidget;
@@ -24,13 +25,16 @@ namespace src
                         Q_OBJECT
 
                     public:
-                        explicit BackgroundSubstractorWidget(const model::av::AVManager& avManager, QWidget *parent = 0);
+                        explicit BackgroundSubstractorWidget(model::av::AVManager &avManager, QWidget *parent = 0);
                         ~BackgroundSubstractorWidget();
 
-                        //virtual void init();
+                    private slots:
+                        void on_horizontalSlider_valueChanged(int value);
 
                     private:
                         Ui::BackgroundSubstractorWidget *ui;
+
+
                     };
                 }
             }

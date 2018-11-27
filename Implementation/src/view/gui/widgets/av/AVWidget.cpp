@@ -10,7 +10,7 @@ namespace src
             {
                 namespace av
                 {
-                    AVWidget::AVWidget(const model::av::AVManager& avManager, QWidget *parent)
+                    AVWidget::AVWidget(model::av::AVManager& avManager, QWidget *parent)
                         : QWidget(parent)
                         , mAVManager(&avManager)
                     {
