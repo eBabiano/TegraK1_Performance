@@ -24,7 +24,8 @@ namespace src
                 ui->setupUi(this);
 
                 initializeGUI();
-                mVideoPlayer->init();
+                ///mVideoPlayer->init();
+                mFlyCaptureVideoPlayer->init();
 
                 mFlipVert=false;
                 mFlipHoriz=false;
@@ -72,56 +73,15 @@ namespace src
 
             void MainWindow::timerEvent(QTimerEvent *event)
             {
-                /*   if( mFlipVert && mFlipHoriz )
-                       cv::flip( mImage,mImage, -1);
-                   else if( mFlipVert )
-                       cv::flip( mImage,mImage, 0);
-                   else if( mFlipHoriz )
-                       cv::flip( mImage,mImage, 1);*/
-
-
                    ///@todo SUM all the CV::MAT images
-                   mAVRenderManager->setCaptureImage(mVideoPlayer->getCurrentFrame());
-                   //std::cout << "FrAMES NUMBER: " << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_POS_FRAMES) << std::std::endl;
-                 //  double tic = cvGetTickCount();
+                 /* mAVRenderManager->setCaptureImage(mVideoPlayer->getCurrentFrame());*/
 
-                 /*  if (!mIsPainted)
-                   {
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_POS_MSEC) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_POS_FRAMES) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_POS_AVI_RATIO) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FRAME_WIDTH) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FRAME_HEIGHT) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FPS) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FOURCC) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FRAME_COUNT) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FORMAT) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_MODE) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_BRIGHTNESS) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_CONTRAST) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_SATURATION) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_HUE) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_GAIN) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_EXPOSURE) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_CONVERT_RGB) << std::endl;
-                       std::cout << mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_RECTIFICATION) << std::endl;
-                       mIsPainted = true;
-                   }*/
-
-                   //mAVRenderManager->setTotalFrames(mVideoPlayer->getVideoCapture().get(CV_CAP_PROP_FRAME_COUNT));
-                   mAVRenderManager->sumAllAVImages();
-           //        mImage = mImage + mAVRenderManager->getImageForRender();
+               /*    mAVRenderManager->sumAllAVImages();*/
 
                    // Show the image
                    //mVideoPlayer->runVideoPlayerInput();
-                   mVideoPlayer->runVideoPlayerOutput(mAVRenderManager->getImageForRender(), false);
+               /*    mVideoPlayer->runVideoPlayerOutput(mAVRenderManager->getImageForRender(), false);*/
 
-   /*                double toc = (cvGetTickCount() - tic) / cvGetTickFrequency();
-
-                   toc = toc / 1000000;
-
-                   float fps = 1 / toc;
-                   std::cout << "FPS: " << fps << std::endl;*/
             }
 
         }

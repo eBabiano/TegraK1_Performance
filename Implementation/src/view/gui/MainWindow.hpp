@@ -10,6 +10,7 @@
 #include <src/view/gui/widgets/ControlPanelWidget.hpp>
 
 #include <src/view/gui/OpenCVVideoPlayer.hpp>
+#include <src/view/gui/FlyCaptureVideoPlayer.hpp>
 #include <src/view/av/AVRenderManager.hpp>
 #include <src/model/av/AVManager.hpp>
 #include <src/model/Benchmark.hpp>
@@ -50,6 +51,7 @@ namespace src
 
                 Ui::MainWindow *ui;
                 src::view::gui::OpenCVVideoPlayer* mVideoPlayer;
+                src::view::gui::FlyCaptureVideoPlayer* mFlyCaptureVideoPlayer;
                 src::view::av::AVRenderManager* mAVRenderManager;
                 src::model::av::AVManager* mAVManager;
                 src::model::Benchmark* mBenchmark;

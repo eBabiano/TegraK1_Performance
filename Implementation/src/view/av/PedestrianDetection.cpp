@@ -73,19 +73,19 @@ namespace src
 
                while(mIsRunningThread)
                {
-                   capturedFrameGPU.upload(getCapturedImage());
+                   mMutex.lock();
                    getCapturedImage().copyTo(frame);
+                   capturedFrameGPU.upload(frame);
 
                    if (!capturedFrameGPU.empty())
                    {
                        t1 = clock();
                        cv::cvtColor(frame, frame, CV_RGB2GRAY);
                        cv::gpu::cvtColor(capturedFrameGPU, capturedFrameGPU, CV_RGB2GRAY);
-                       hog.setSVMDetector(hog.getDefaultPeopleDetector());
+                       hog.setSVMDetector(cv::gpu::HOGDescriptor::getDefaultPeopleDetector());
 
                        std::vector<cv::Rect> found, found_filtered;
                        hog.detectMultiScale(capturedFrameGPU, found/*, 0, cv::Size(8,8), cv::Size(128,128), 1.05, 2*/);
-                       t2 = clock();
 
                        size_t i, j;
                        for (i=0; i<found.size(); i++)
@@ -107,10 +107,12 @@ namespace src
                            r.height = cvRound(r.height*0.9);
                            cv::rectangle(frame, r.tl(), r.br(), cv::Scalar(0,255,0), 2);
                        }
+                       t2 = clock();
 
                        frame.copyTo(mImage);
 
                        updateBenchmark(t1, t2);
+                       mMutex.unlock();
                    }
                }
            }

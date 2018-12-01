@@ -13,6 +13,12 @@ namespace src
             {
                 public:
                     FlyCaptureVideoPlayer();
+                    void init();
+                    int runSingleCamera(FlyCapture2::PGRGuid guid, int idxCam);
+
+                private:
+                    int readFramesFromCamera(FlyCapture2::Camera *cam, int idxCam);
+
             };
         }
     }
