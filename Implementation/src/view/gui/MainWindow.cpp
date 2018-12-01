@@ -11,7 +11,7 @@ namespace src
             MainWindow::MainWindow(model::Benchmark& benchmark,
                                    model::av::AVManager &avManager,
                                    av::AVRenderManager &avRenderManager,
-                                   OpenCVVideoPlayer &videoPlayer,
+                                   videoplayer::VideoPlayer& videoPlayer,
                                    QWidget *parent) :
                 QWidget(parent),
                 ui(new Ui::MainWindow)
@@ -24,8 +24,7 @@ namespace src
                 ui->setupUi(this);
 
                 initializeGUI();
-                ///mVideoPlayer->init();
-                mFlyCaptureVideoPlayer->init();
+                mVideoPlayer->init();
 
                 mFlipVert=false;
                 mFlipHoriz=false;
@@ -73,15 +72,14 @@ namespace src
 
             void MainWindow::timerEvent(QTimerEvent *event)
             {
-                   ///@todo SUM all the CV::MAT images
-                 /* mAVRenderManager->setCaptureImage(mVideoPlayer->getCurrentFrame());*/
+                ///@todo SUM all the CV::MAT images
+                mAVRenderManager->setCaptureImage(mVideoPlayer->getCurrentFrame());
+                mAVRenderManager->sumAllAVImages();
 
-               /*    mAVRenderManager->sumAllAVImages();*/
+                //mVideoPlayer->getCurrentFrame().copyTo(mat);
 
-                   // Show the image
-                   //mVideoPlayer->runVideoPlayerInput();
-               /*    mVideoPlayer->runVideoPlayerOutput(mAVRenderManager->getImageForRender(), false);*/
-
+                // Show the image
+                mVideoPlayer->run(mAVRenderManager->getImageForRender());
             }
 
         }

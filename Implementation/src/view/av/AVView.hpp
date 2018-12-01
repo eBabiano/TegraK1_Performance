@@ -45,6 +45,9 @@ namespace src
                    //BACKGROUND SUBSTRACTOR
                    virtual void setLearningRate(double value){}
 
+                   //FACE DETECTION
+
+
 
                protected:
                    void updateBenchmark(double initTime, double endTime);

@@ -4,7 +4,10 @@
 #include <src/model/Benchmark.hpp>
 
 #include <src/view/gui/MainWindow.hpp>
-#include <src/view/gui/OpenCVVideoPlayer.hpp>
+#include <src/view/gui/videoplayer/OpenCVVideoPlayer.hpp>
+#include <src/view/gui/videoplayer/FlyCaptureVideoPlayer.hpp>
+#include <src/view/gui/videoplayer/VideoPlayer.hpp>
+
 #include <src/view/gui/events/StartAVEvent.hpp>
 #include <src/view/gui/events/SelectAVEvent.hpp>
 #include <src/view/av/AVRenderManager.hpp>
@@ -34,6 +37,7 @@ int main(int argc, char* argv[])
 {
 
     int exitCode = -13;
+    std::string videoCaptureOption = std::string(argv[1]);
 
     std::cout << "Running..." << std::endl;
 
@@ -53,11 +57,26 @@ int main(int argc, char* argv[])
     QApplication app(argc, argv);
     std::string windowInput = "Input Video";
     std::string windowOutput = "Output Video";
-    src::view::gui::OpenCVVideoPlayer* videoPlayer = new src::view::gui::OpenCVVideoPlayer(0, windowInput, windowOutput);
+    src::view::gui::videoplayer::VideoPlayer* videoPlayerOpenCV = new src::view::gui::videoplayer::OpenCVVideoPlayer(0, windowOutput);
+    src::view::gui::videoplayer::VideoPlayer* videoPlayerFlyCapture = new src::view::gui::videoplayer::FlyCaptureVideoPlayer();
     cv::setMouseCallback(windowOutput, onMouse, NULL);
     std::cout << "OpenCV version: " << CV_VERSION << std::endl;
 
-    src::view::gui::MainWindow* mainWindow = new src::view::gui::MainWindow(*mBenchmark, *mAVManager, *mAVRenderManager, *videoPlayer);
+    src::view::gui::MainWindow* mainWindow;
+
+    if (videoCaptureOption == "--fly")
+    {
+        mainWindow = new src::view::gui::MainWindow(*mBenchmark, *mAVManager, *mAVRenderManager, *videoPlayerFlyCapture);
+    }
+    else if (videoCaptureOption == "--cam")
+    {
+        mainWindow = new src::view::gui::MainWindow(*mBenchmark, *mAVManager, *mAVRenderManager, *videoPlayerOpenCV);
+    }
+    else
+    {
+        std::cout << "Error in parameters: Specify input camera: [--fly], [--cam]" << std::endl;
+        return -1;
+    }
     mainWindow->setModifyAlgorithmParametersController(*mModifyAlgorithmParametersController);
 
     //LINKERS
