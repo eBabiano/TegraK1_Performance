@@ -6,6 +6,9 @@
 #include <opencv2/core/core.hpp>
 #include <src/view/gui/videoplayer/VideoPlayer.hpp>
 
+#include <boost/thread.hpp>
+#include <mutex>
+
 namespace src
 {
     namespace view
@@ -18,12 +21,17 @@ namespace src
                         : public VideoPlayer
                 {
                     public:
-                        FlyCaptureVideoPlayer();
+                        FlyCaptureVideoPlayer(int indexCamera);
+                        ~FlyCaptureVideoPlayer();
 
                         virtual void init();
-                        virtual void run(cv::Mat newframe);
+                        virtual void run();
 
-                    private:
+                        void setCurrentFrame(const cv::Mat &value);
+
+                        void setGuid(const FlyCapture2::PGRGuid &value);
+
+                private:
                         int readFramesFromCamera();
                         int initSingleCamera(FlyCapture2::PGRGuid guid);
 
@@ -31,6 +39,12 @@ namespace src
                         FlyCapture2::Image* mRawImage;
                         unsigned int mIndexCamera;
                         char mWaitKey;
+                        FlyCapture2::PGRGuid mGuid;
+
+                        boost::thread* mThread;
+                        std::mutex mMutex;
+                        cv::Mat mCurrentFrame;
+                        bool mIsRunningThread;
 
                 };
             }

@@ -43,10 +43,10 @@ namespace src
 
            AVRenderManager::~AVRenderManager()
            {
-               for (auto& av : mAVViews)
+               /*for (auto& av : mAVViews)
                {
                    delete av.second;
-               }
+               }*/
            }
 
            void AVRenderManager::observableUpdated(const model::av::events::AVStarted &event)

@@ -19,7 +19,8 @@ namespace src
                         OpenCVVideoPlayer(int captureInput, std::string nameOutput);
 
                         virtual void init();
-                        virtual void run(cv::Mat newframe);
+                        //virtual void run(cv::Mat newframe);
+                        virtual void run();
 
                     private:
                         std::string mWindowOutputName;

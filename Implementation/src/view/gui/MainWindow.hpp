@@ -32,7 +32,6 @@ namespace src
             public:
                 explicit MainWindow(model::Benchmark &benchmark, model::av::AVManager &avManager
                                     , av::AVRenderManager &avRenderManager
-                                    , videoplayer::VideoPlayer& videoPlayer
                                     , QWidget *parent = 0);
                 virtual ~MainWindow();
 
@@ -49,7 +48,7 @@ namespace src
                 void initializeGUI();
 
                 Ui::MainWindow *ui;
-                src::view::gui::videoplayer::VideoPlayer* mVideoPlayer;
+               /// src::view::gui::videoplayer::VideoPlayer* mVideoPlayer;
                 src::view::av::AVRenderManager* mAVRenderManager;
                 src::model::av::AVManager* mAVManager;
                 src::model::Benchmark* mBenchmark;

@@ -16,7 +16,10 @@ namespace src
 
            AVView::~AVView()
            {
-               mThread->join();
+               if (mIsRunningThread)
+               {
+                   mThread->join();
+               }
            }
 
            void AVView::start()

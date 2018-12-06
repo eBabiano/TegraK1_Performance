@@ -11,11 +11,11 @@ namespace src
             MainWindow::MainWindow(model::Benchmark& benchmark,
                                    model::av::AVManager &avManager,
                                    av::AVRenderManager &avRenderManager,
-                                   videoplayer::VideoPlayer& videoPlayer,
+                                   /*videoplayer::VideoPlayer& videoPlayer,*/
                                    QWidget *parent) :
                 QWidget(parent),
                 ui(new Ui::MainWindow)
-              , mVideoPlayer(&videoPlayer)
+              ///, mVideoPlayer(&videoPlayer)
               , mAVRenderManager(&avRenderManager)
               , mAVManager(&avManager)
               , mBenchmark(&benchmark)
@@ -24,7 +24,7 @@ namespace src
                 ui->setupUi(this);
 
                 initializeGUI();
-                mVideoPlayer->init();
+                ///mVideoPlayer->init();
 
                 mFlipVert=false;
                 mFlipHoriz=false;
@@ -73,13 +73,11 @@ namespace src
             void MainWindow::timerEvent(QTimerEvent *event)
             {
                 ///@todo SUM all the CV::MAT images
-                mAVRenderManager->setCaptureImage(mVideoPlayer->getCurrentFrame());
-                mAVRenderManager->sumAllAVImages();
-
-                //mVideoPlayer->getCurrentFrame().copyTo(mat);
+                ////mAVRenderManager->setCaptureImage(mVideoPlayer->getCurrentFrame());
+                ////mAVRenderManager->sumAllAVImages();
 
                 // Show the image
-                mVideoPlayer->run(mAVRenderManager->getImageForRender());
+                ////mVideoPlayer->run(mAVRenderManager->getImageForRender());
             }
 
         }

@@ -11,37 +11,27 @@ namespace src
         {
             namespace videoplayer
             {
-                FlyCaptureVideoPlayer::FlyCaptureVideoPlayer()
+                FlyCaptureVideoPlayer::FlyCaptureVideoPlayer(int indexCamera)
+                    : mIndexCamera(indexCamera)
+                    , mIsRunningThread(false)
                 {
                     mCurrentFrame = cv::Mat::zeros(cv::Size(640, 480), CV_8UC3);
+                }
 
+                FlyCaptureVideoPlayer::~FlyCaptureVideoPlayer()
+                {
+                    if (mIsRunningThread)
+                    {
+                        mThread->join();
+                        mCam->Disconnect();
+                    }
                 }
 
                 void FlyCaptureVideoPlayer::init()
                 {
-                    FlyCapture2::BusManager busManager;
-                    unsigned int numCameras;
-                    FlyCapture2::Error error = busManager.GetNumOfCameras(&numCameras);
-                    if (error != FlyCapture2::PGRERROR_OK)
-                    {
-                        std::cout << "FlyCapture2 camera error detected" << std::endl;
-                    }
-                    else
-                    {
-                        std::cout << "Number of cameras detected: " << numCameras << std::endl;
-
-                        for (unsigned int i = 0; i < numCameras; i++)
-                        {
-                            FlyCapture2::PGRGuid guid;
-                            mIndexCamera = i;
-                            error = busManager.GetCameraFromIndex(mIndexCamera, &guid);
-                            if (error != FlyCapture2::PGRERROR_OK)
-                            {
-                                std::cout << "Error detected for camera " << i << std::endl;
-                            }
-                            initSingleCamera(guid);
-                        }
-                    }
+                    initSingleCamera(mGuid);
+                    mThread = new boost::thread(boost::bind(&FlyCaptureVideoPlayer::run, this));
+                    mIsRunningThread = true;
                 }
 
                 int FlyCaptureVideoPlayer::initSingleCamera(FlyCapture2::PGRGuid guid)
@@ -81,6 +71,17 @@ namespace src
                     return ret;
                 }
 
+                void FlyCaptureVideoPlayer::setGuid(const FlyCapture2::PGRGuid &value)
+                {
+                    mGuid = value;
+                }
+
+
+                void FlyCaptureVideoPlayer::setCurrentFrame(const cv::Mat &value)
+                {
+                    mCurrentFrame = value;
+                }
+
                 int FlyCaptureVideoPlayer::readFramesFromCamera()
                 {
                     int ret = 0;
@@ -97,41 +98,49 @@ namespace src
                     return ret;
                 }
 
-                void FlyCaptureVideoPlayer::run(cv::Mat newframe)
+                void FlyCaptureVideoPlayer::run()
                 {
                     FlyCapture2::Error error;
 
-                    // Retrieve an image
-                    error = mCam->RetrieveBuffer(mRawImage);
-                    if (error != FlyCapture2::PGRERROR_OK) {
-                        std::cout << "FlyCapture2 camera error detected" << std::endl;
-                    }
-                    else {
-                        // Create a converted image
-                        FlyCapture2::Image convertedImage;
-                        // Convert the raw image
-                        error = mRawImage->Convert(FlyCapture2::PIXEL_FORMAT_BGR, &convertedImage);
+                    while(mCam->IsConnected())
+                    {
+                        mMutex.lock();
+                        // Retrieve an image
+                        error = mCam->RetrieveBuffer(mRawImage);
+
                         if (error != FlyCapture2::PGRERROR_OK) {
-                            std::cout << "FlyCapture2 camera error detected" << std::endl;
+                            std::cout << "FlyCapture2 camera error detected 1" << std::endl;
                         }
                         else {
-                            unsigned int rowBytes = (double) convertedImage.GetReceivedDataSize() /
-                                    (double) convertedImage.GetRows();
-                            cv::Mat(convertedImage.GetRows(), convertedImage.GetCols(),
-                                    CV_8UC3, convertedImage.GetData(), rowBytes).copyTo(mCurrentFrame);
+                            // Create a converted image
+                            FlyCapture2::Image convertedImage;
+                            // Convert the raw image
+                            error = mRawImage->Convert(FlyCapture2::PIXEL_FORMAT_BGR, &convertedImage);
 
-                            if (mCurrentFrame.empty())
-                            {
-                                std::cout << "Frame empty!!" << std::endl;
+                            if (error != FlyCapture2::PGRERROR_OK) {
+                                std::cout << "FlyCapture2 camera error detected 2" << std::endl;
                             }
+                            else {
+                                unsigned int rowBytes = (double) convertedImage.GetReceivedDataSize() /
+                                        (double) convertedImage.GetRows();
+                                cv::Mat(convertedImage.GetRows(), convertedImage.GetCols(),
+                                        CV_8UC3, convertedImage.GetData(), rowBytes).copyTo(mCurrentFrame);
 
-                            //cv::Mat imgReadColor;
-                            //cv::cvtColor(mCurrentFrame, mCurrentFrame, CV_BGR2RGB);
+                                if (mCurrentFrame.empty())
+                                {
+                                    std::cout << "Frame empty!!" << std::endl;
+                                }
 
-                            cv::imshow("FlyCapture", newframe);
-                            mWaitKey = (char) cv::waitKey(1);
+                                //cv::Mat imgReadColor;
+                                //cv::cvtColor(mCurrentFrame, mCurrentFrame, CV_BGR2RGB);
+
+                                cv::imshow("FlyCapture" + std::to_string(mIndexCamera), mCurrentFrame);
+                            }
                         }
+                        mMutex.unlock();
+                        usleep(60000);
                     }
+                    mCam->Disconnect();
                 }
             }
         }

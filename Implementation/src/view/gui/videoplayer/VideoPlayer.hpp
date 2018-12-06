@@ -18,7 +18,8 @@ namespace src
                         VideoPlayer();
 
                         virtual void init() = 0;
-                        virtual void run(cv::Mat newframe) = 0;
+                        //virtual void run(cv::Mat newframe) = 0;
+                        virtual void run() = 0;
 
                         cv::Mat getCurrentFrame();
 

@@ -33,9 +33,9 @@ namespace src
                     std::cout << "Width: " << sizeRef.width << ", Height: " << sizeRef.height << std::endl;
                 }
 
-                void OpenCVVideoPlayer::run(cv::Mat newframe)
+                void OpenCVVideoPlayer::run()
                 {
-                    mCapture >> mCurrentFrame;
+                    /*mCapture >> mCurrentFrame;
 
                     if (mCurrentFrame.empty())
                     {
@@ -43,7 +43,7 @@ namespace src
                     }
 
                     cv::imshow(mWindowOutputName, newframe);
-                    mWaitKey = (char) cv::waitKey(1);
+                    mWaitKey = (char) cv::waitKey(1);*/
                 }
 
             }
